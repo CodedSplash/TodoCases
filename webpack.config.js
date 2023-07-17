@@ -13,8 +13,8 @@ module.exports = {
   target,
   devtool,
   devServer: {
-      static: path.join(__dirname, "dist"),
-      open: true
+    static: path.join(__dirname, "dist"),
+    open: true
   },
   entry: path.resolve('@babel/polyfill', __dirname, 'src', 'index.ts'),
   output: {
@@ -25,7 +25,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(s|sc|sa)ss$/i,
+        test: /\.(c|sc|sa)ss$/i,
         use: [
           devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
@@ -48,7 +48,7 @@ module.exports = {
         }
       },
       {
-      test: /\.tsx?$/,
+        test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
       }
@@ -58,12 +58,12 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
-  new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src', 'index.html'),
-      inject : 'body'
-  }),
-  new MiniCssExtractPlugin({
+      inject: 'body'
+    }),
+    new MiniCssExtractPlugin({
       filename: 'css/style.[contenthash].css'
-  })
+    })
   ]
 }
