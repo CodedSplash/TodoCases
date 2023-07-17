@@ -1,1 +1,4 @@
-@import "./scss/style";
+// Import normalize.css
+@import '../node_modules/normalize.css/normalize.css';
+// Import style.scss
+@import './scss/style';
