@@ -1,0 +1,28 @@
+.header {
+  padding: 10px 0;
+  background-color: rgba(#066, .5);
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+}
+
+.button {
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 4px;
+  transition: .05s ease 0s;
+  z-index: 19;
+
+  &:hover {
+    background-color: rgba(#fff, .3);
+  }
+}
