@@ -17,10 +17,17 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
         padding: 20px 15px;
         height: 100vh;
         background-color: #fafafa;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease 0s;
+      }
+      
+      .project-side-menu.open {
+        transform: translateX(0);
       }
       
       .project-side-menu__title {
         font-weight: 700;
+        cursor: default;
       }
       
        .project-side-menu__add {
@@ -65,7 +72,7 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
     `
     this.shadow.innerHTML = `
 ${style}
-<div class="project-side-menu">
+<div class="project-side-menu open">
   <div class="project-side-menu__body">
     <div class="project-side-menu__add">
       <span class="project-side-menu__title">Проекты</span>
@@ -101,6 +108,21 @@ ${style}
   public connectedCallback(): void {
     this.render()
     this.projectRenderer()
+  }
+
+  static get observedAttributes(): string[] {
+    return ['open'];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string , newValue: string): void {
+    if (name === 'open') {
+      const element = this.shadow.querySelector('.project-side-menu') as HTMLElement
+      if (newValue === 'true') {
+        element.classList.add('open')
+      } else if (newValue === 'false') {
+        element.classList.remove('open')
+      }
+    }
   }
 
 }
