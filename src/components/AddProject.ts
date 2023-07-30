@@ -23,7 +23,7 @@ class AddProject extends HTMLElement implements Element {
         }
         
         button:hover {
-            background-color: rgba(47,79,79,0.25);
+            background-color: rgba(255,255,255,0.4);
         }
       </style>
     `
