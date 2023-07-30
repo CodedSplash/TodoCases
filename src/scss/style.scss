@@ -3,11 +3,11 @@ body {
 }
 
 .header {
-  padding: 10px 0;
-  background-color: #fff;
-  -webkit-box-shadow: 0 5px 6px -6px rgba(34, 60, 80, 0.6);
-  -moz-box-shadow: 0 5px 6px -6px rgba(34, 60, 80, 0.6);
-  box-shadow: 0 5px 6px -6px rgba(34, 60, 80, 0.6);
+  padding: 6px 0;
+  background-color: #fafafa;
+  -webkit-box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
+  -moz-box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
+  box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
   z-index: 99;
 
   &__container {
