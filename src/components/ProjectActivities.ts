@@ -1,6 +1,6 @@
-import { ContextMenu } from "../ts/interfaces";
+import { ProjectActivitiesInterface } from "../ts/interfaces";
 
-class ProjectActivities extends HTMLElement implements ContextMenu {
+class ProjectActivities extends HTMLElement implements ProjectActivitiesInterface {
     shadow: ShadowRoot
     constructor() {
         super()

@@ -28,6 +28,12 @@ export interface Popup extends Element {
   addProject():void
 }
 
-export interface ContextMenu extends Element {
+interface ContextMenu extends Element {
   openCloseMenu():void
+}
+
+export interface ProjectActivitiesInterface extends ContextMenu {
+  modify(): void
+  duplicate(): void
+  delete(): void
 }
