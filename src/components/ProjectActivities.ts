@@ -1,4 +1,4 @@
-import { ProjectActivitiesInterface } from "../ts/interfaces"
+import {ProjectActivitiesInterface, ProjectInterface, ProjectMenuInterface} from "../ts/interfaces"
 
 class ProjectActivities extends HTMLElement implements ProjectActivitiesInterface {
     shadow: ShadowRoot
@@ -71,7 +71,7 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
                 <div class="context-menu">
                     <div class="context-menu__body">
                         <button class="context-menu__item" id="modify">Изменить</button>
-                        <button class="context-menu__item">Дублировать</button>
+                        <button class="context-menu__item" id="duplicate">Дублировать</button>
                         <button class="context-menu__item">Удалить</button>
                     </div>
                 </div>
@@ -92,15 +92,38 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
         this.openCloseMenu()
     }
 
+    public duplicate(): void {
+        const projectMenu = document.querySelector('project-side-menu') as ProjectMenuInterface & HTMLElement
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const idProject: number = parseInt(this.getAttribute('id-project') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const indexProject: number = projects.indexOf(project)
+        const duplicateProject: ProjectInterface = {
+            id: new Date().getTime(),
+            title: `Копия ${project.title}`,
+            color: project.color,
+            tasks: project.tasks
+        }
+        projects.splice(indexProject + 1, 0, duplicateProject as ProjectInterface)
+        localStorage.setItem('projects', JSON.stringify(projects))
+        projectMenu.projectRenderer()
+        this.openCloseMenu()
+    }
+
+    public delete() {
+    }
+
     public connectedCallback():void {
         this.render()
         this.shadow.querySelector('button.context-menu-button')!.addEventListener('click', this.openCloseMenu.bind(this))
         this.shadow.querySelector('button#modify')!.addEventListener('click', this.modify.bind(this))
+        this.shadow.querySelector('button#duplicate')!.addEventListener('click', this.duplicate.bind(this))
     }
 
     public disconnectedCallback(): void {
         this.shadow.querySelector('.context-menu-button')!.removeEventListener('click', this.openCloseMenu)
         this.shadow.querySelector('button#modify')!.removeEventListener('click', this.modify)
+        this.shadow.querySelector('button#duplicate')!.removeEventListener('click', this.duplicate.bind(this))
     }
 }
 
