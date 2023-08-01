@@ -1,4 +1,4 @@
-import { ProjectActivitiesInterface } from "../ts/interfaces";
+import { ProjectActivitiesInterface } from "../ts/interfaces"
 
 class ProjectActivities extends HTMLElement implements ProjectActivitiesInterface {
     shadow: ShadowRoot
@@ -70,7 +70,7 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
                 </button>
                 <div class="context-menu">
                     <div class="context-menu__body">
-                        <button class="context-menu__item">Изменить</button>
+                        <button class="context-menu__item" id="modify">Изменить</button>
                         <button class="context-menu__item">Дублировать</button>
                         <button class="context-menu__item">Удалить</button>
                     </div>
@@ -84,13 +84,23 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
         contextMenu.classList.toggle('open')
     }
 
+    public modify(): void {
+        const modifyProjectElement = document.createElement('modify-project')
+        const idProject: string = this.getAttribute('id-project')!
+        modifyProjectElement.setAttribute('id-project', idProject)
+        document.body.append(modifyProjectElement)
+        this.openCloseMenu()
+    }
+
     public connectedCallback():void {
         this.render()
         this.shadow.querySelector('button.context-menu-button')!.addEventListener('click', this.openCloseMenu.bind(this))
+        this.shadow.querySelector('button#modify')!.addEventListener('click', this.modify.bind(this))
     }
 
     public disconnectedCallback(): void {
         this.shadow.querySelector('.context-menu-button')!.removeEventListener('click', this.openCloseMenu)
+        this.shadow.querySelector('button#modify')!.removeEventListener('click', this.modify)
     }
 }
 
