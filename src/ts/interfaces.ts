@@ -31,6 +31,10 @@ export interface AddProjectPopup extends Popup {
   addProject():void
 }
 
+export interface ModifyProjectPopup extends Popup {
+  saveModify():void
+}
+
 interface ContextMenu extends Element {
   openCloseMenu():void
 }
