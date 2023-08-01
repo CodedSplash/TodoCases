@@ -163,8 +163,17 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
     `
     }
 
+    public closePopup(): void {
+        document.querySelector('modify-project')!.remove()
+    }
+
     public connectedCallback(): void {
         this.render()
+        this.shadow.querySelector('.popup__cancel')!.addEventListener('click', this.closePopup)
+    }
+
+    public disconnectedCallback():void {
+        this.shadow.querySelector('.popup__cancel')!.removeEventListener('click', this.closePopup)
     }
 }
 
