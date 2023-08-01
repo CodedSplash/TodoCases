@@ -72,7 +72,7 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
                     <div class="context-menu__body">
                         <button class="context-menu__item" id="modify">Изменить</button>
                         <button class="context-menu__item" id="duplicate">Дублировать</button>
-                        <button class="context-menu__item">Удалить</button>
+                        <button class="context-menu__item" id="delete">Удалить</button>
                     </div>
                 </div>
             </div>
@@ -110,7 +110,16 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
         this.openCloseMenu()
     }
 
-    public delete() {
+    public delete(): void {
+        const projectMenu = document.querySelector('project-side-menu') as ProjectMenuInterface & HTMLElement
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const idProject: number = parseInt(this.getAttribute('id-project') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const indexProject: number = projects.indexOf(project)
+        projects.splice(indexProject, 1)
+        localStorage.setItem('projects', JSON.stringify(projects))
+        projectMenu.projectRenderer()
+        this.openCloseMenu()
     }
 
     public connectedCallback():void {
@@ -118,12 +127,14 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
         this.shadow.querySelector('button.context-menu-button')!.addEventListener('click', this.openCloseMenu.bind(this))
         this.shadow.querySelector('button#modify')!.addEventListener('click', this.modify.bind(this))
         this.shadow.querySelector('button#duplicate')!.addEventListener('click', this.duplicate.bind(this))
+        this.shadow.querySelector('button#delete')!.addEventListener('click', this.delete.bind(this))
     }
 
     public disconnectedCallback(): void {
         this.shadow.querySelector('.context-menu-button')!.removeEventListener('click', this.openCloseMenu)
         this.shadow.querySelector('button#modify')!.removeEventListener('click', this.modify)
         this.shadow.querySelector('button#duplicate')!.removeEventListener('click', this.duplicate.bind(this))
+        this.shadow.querySelector('button#delete')!.removeEventListener('click', this.delete.bind(this))
     }
 }
 
