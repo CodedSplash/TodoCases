@@ -27,7 +27,7 @@ interface Popup extends Element {
   closePopup(): void
 }
 
-export interface addProjectPopup extends Popup {
+export interface AddProjectPopup extends Popup {
   addProject():void
 }
 
