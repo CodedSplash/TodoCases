@@ -1,6 +1,6 @@
-import {Popup, ProjectInterface, ProjectMenuInterface } from "../ts/interfaces"
+import {addProjectPopup, ProjectInterface, ProjectMenuInterface} from "../ts/interfaces"
 
-class AddPopup extends HTMLElement implements Popup {
+class AddPopup extends HTMLElement implements addProjectPopup {
   shadow: ShadowRoot
 
   constructor() {
