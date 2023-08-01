@@ -107,7 +107,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         box-shadow: 0 0 4px 0 rgba(34, 60, 80, 0.2);
       }
       
-      .popup__add-btn {
+      .popup__save-btn {
         background-color: #ff004d;
         border-radius: 4px;
         border: none;
@@ -119,7 +119,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         -moz-box-shadow: 0 0 4px 0 rgba(34, 60, 80, 0.2);
         box-shadow: 0 0 4px 0 rgba(34, 60, 80, 0.2);
       }
-      .popup__add-btn:disabled {
+      .popup__save-btn:disabled {
         background-color: rgba(255,0,77,0.7);
         cursor: default;
       }
@@ -156,7 +156,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         <hr>
         <div class="popup__buttons">
             <button class="popup__cancel">Отмена</button>
-            <button class="popup__add-btn" disabled>Сохранить</button>
+            <button class="popup__save-btn" disabled>Сохранить</button>
         </div>
       </div>
     </div>
