@@ -1,4 +1,4 @@
-import { ModifyProjectPopup } from "../ts/interfaces"
+import {ModifyProjectPopup, ProjectInterface, ProjectMenuInterface} from "../ts/interfaces"
 
 class ModifyProject extends HTMLElement implements ModifyProjectPopup {
     shadow: ShadowRoot
@@ -167,13 +167,49 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         document.querySelector('modify-project')!.remove()
     }
 
+    public saveModify(): void {
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const idProject: number = parseInt(this.getAttribute('id-project') as string)
+        const projectMenu = document.querySelector('project-side-menu') as ProjectMenuInterface & HTMLElement
+        const nameProject = this.shadow.querySelector('#name') as HTMLInputElement
+        const colorProject = this.shadow.querySelector('#color') as HTMLInputElement
+        const newProjects = projects.map((project: ProjectInterface, index: number) => {
+            if (project.id === idProject) {
+                const modifyProject: ProjectInterface = {
+                    id: project.id,
+                    title: nameProject.value,
+                    color: colorProject.value,
+                    tasks: project.tasks
+                }
+                return modifyProject
+            } else {
+                return project
+            }
+        })
+        localStorage.setItem('projects', JSON.stringify(newProjects))
+        projectMenu.projectRenderer()
+        this.closePopup()
+    }
+
     public connectedCallback(): void {
         this.render()
+        this.shadow.querySelector('.popup__save-btn')!.addEventListener('click', this.saveModify.bind(this))
         this.shadow.querySelector('.popup__cancel')!.addEventListener('click', this.closePopup)
+        this.shadow.querySelector('#name')!.addEventListener('input', (event) => {
+            const addButton = this.shadow.querySelector('.popup__save-btn') as HTMLButtonElement
+            const inputElement = event.target as HTMLInputElement
+            addButton.disabled = !inputElement.value
+        })
     }
 
     public disconnectedCallback():void {
+        this.shadow.querySelector('.popup__save-btn')!.removeEventListener('click', this.saveModify)
         this.shadow.querySelector('.popup__cancel')!.removeEventListener('click', this.closePopup)
+        this.shadow.querySelector('#name')!.removeEventListener('input', (event) => {
+            const addButton = this.shadow.querySelector('.popup__save-btn') as HTMLButtonElement
+            const inputElement = event.target as HTMLInputElement
+            addButton.disabled = !inputElement.value
+        })
     }
 }
 
