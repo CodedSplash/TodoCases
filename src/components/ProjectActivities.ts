@@ -39,6 +39,7 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
                     padding: 6px 8px;
                     border-radius: 5px;
                     border: 1px solid rgba(255, 255, 255, 0.1);
+                    z-index: 10;
                 }
                 
                 .context-menu.open {
