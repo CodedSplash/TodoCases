@@ -87,8 +87,8 @@ ${style}
   }
 
   public projectRenderer(): void {
-    const projects = JSON.parse(localStorage.getItem('projects') as string) as ProjectInterface[]
-    const html = projects ? projects.map(data => this.projectTemplate(data)).join('') : 'Проектов нет.'
+    const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+    const html = projects && projects.length ? projects.map(data => this.projectTemplate(data)).join('') : 'Проектов нет.'
     const containerProjects = this.shadow.querySelector('.project-container') as HTMLDivElement
     containerProjects.innerHTML = html
   }
