@@ -44,3 +44,9 @@ export interface ProjectActivitiesInterface extends ContextMenu {
   duplicate(): void
   delete(): void
 }
+
+export interface TodoContentInterface extends Element {
+  taskRendering(): void
+  renderAddTaskForm(): void
+  renderAddTaskButton(): void
+}
