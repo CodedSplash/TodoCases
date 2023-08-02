@@ -1,4 +1,4 @@
-import { ProjectInterface, ProjectMenuInterface } from '../ts/interfaces'
+import {ProjectInterface, ProjectMenuInterface, TodoContentInterface} from '../ts/interfaces'
 
 export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
   shadow: ShadowRoot
@@ -105,9 +105,28 @@ ${style}
 `
   }
 
+  public openProject(event: Event): void {
+    const target = event.target as EventTarget & HTMLElement
+    const idProject: string = target.getAttribute('project-id')!
+    const todoContentElement = document.querySelector('todo-content') as TodoContentInterface & HTMLElement
+    todoContentElement.setAttribute('project-id', idProject)
+    todoContentElement.render()
+  }
+
   public connectedCallback(): void {
     this.render()
     this.projectRenderer()
+    const projectButton = this.shadow.querySelectorAll('.project-side-menu__item-btn')
+    if (projectButton.length) {
+      projectButton.forEach((button: Element) => button.addEventListener('click', this.openProject))
+    }
+  }
+
+  public disconnectedCallback(): void {
+    const projectButton = this.shadow.querySelectorAll('.project-side-menu__item-btn')
+    if (projectButton.length) {
+      projectButton.forEach((button: Element) => button.removeEventListener('click', this.openProject))
+    }
   }
 
   static get observedAttributes(): string[] {

@@ -6,7 +6,7 @@ export interface Element {
 export interface ProjectMenuInterface extends Element {
   projectRenderer(): void
   projectTemplate(project: ProjectInterface): string
-  openProject(): void
+  openProject(event: Event): void
 }
 
 export interface TasksInterface {
