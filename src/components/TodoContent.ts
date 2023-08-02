@@ -11,11 +11,9 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
         const idProject: number = parseInt(this.getAttribute('project-id') as string)
         let projects: ProjectInterface[] | undefined
         let project: ProjectInterface | undefined
-        let tasks: TasksInterface[] | undefined
         if (idProject) {
             projects = JSON.parse(localStorage.getItem('projects') as string)
             project = projects!.find((project: ProjectInterface) => project.id === idProject)!
-            tasks = project.tasks
         }
 
         const style = `
@@ -33,9 +31,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                     </div>
                     <hr>
                     <div class="todo-content__body">
-                        <div class="todo-content__body-content">
-                            ${idProject ? tasks!.map(() => this.renderTaskTemplate).join('') : ''}
-                        </div>
+                        <div class="todo-content__body-content"></div>
                         <div class="todo-content__body-button-container">
                             <button class="todo-content__body-add-button">
                                 <span class="plus">
@@ -50,11 +46,31 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
         `
     }
 
+    public taskRendering(): void {
+        const todoContainer = this.shadow.querySelector('.todo-content__body-content') as HTMLDivElement
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        let projects: ProjectInterface[] | undefined
+        let project: ProjectInterface | undefined
+        let tasks: TasksInterface[] | undefined
+        if (idProject) {
+            projects = JSON.parse(localStorage.getItem('projects') as string)
+            project = projects!.find((project: ProjectInterface) => project.id === idProject)!
+            tasks = project.tasks
+        }
+        todoContainer.innerHTML = idProject ? tasks!.map(() => this.renderTaskTemplate).join('') : ''
+    }
+
     public renderTaskTemplate(): string {
         const idProject: string = this.getAttribute('project-id')!
         return `
             <todo-item project-id="${idProject}"></todo-item>
         `
+    }
+
+    public renderAddTaskForm(): void {
+        const addButton = this.shadow.querySelector('.todo-content__body-button-container') as HTMLDivElement
+        const idProject: string = this.getAttribute('project-id')!
+        addButton.innerHTML = `<add-task-form project-id="${idProject}"></add-task-form>`
     }
 
     public renderAddTaskButton(): void {
