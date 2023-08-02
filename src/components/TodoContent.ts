@@ -87,6 +87,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
 
     public connectedCallback(): void {
         this.render()
+        this.taskRendering()
     }
 }
 
