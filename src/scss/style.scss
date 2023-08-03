@@ -34,3 +34,16 @@ body {
     background-color: rgba(#000, .15);
   }
 }
+
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+project-side-menu {
+  min-width: 250px;
+}
+
+todo-content {
+  width: calc(100% - 280px);
+}
