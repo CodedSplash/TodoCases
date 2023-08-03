@@ -1,4 +1,4 @@
-import {AddTaskFormInterface} from "../ts/interfaces"
+import {AddTaskFormInterface, TodoContentInterface} from "../ts/interfaces"
 
 class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
     shadow: ShadowRoot
@@ -111,8 +111,15 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
         `
     }
 
+    public cancel(): void {
+        const todoContentElement = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+        todoContentElement.renderAddTaskButton()
+    }
+
     public connectedCallback(): void {
         this.render()
+        const cancelButton = this.shadow.querySelector('.add-task-form__cancel') as HTMLButtonElement
+        cancelButton.addEventListener('click', this.cancel)
     }
 }
 
