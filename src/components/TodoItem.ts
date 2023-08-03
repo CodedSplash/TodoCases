@@ -6,7 +6,7 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
         super()
         this.shadow = this.attachShadow({mode: 'open'})
     }
-    
+
     public connectedCallback(): void {
 
     }
