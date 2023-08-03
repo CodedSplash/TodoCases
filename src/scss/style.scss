@@ -38,12 +38,43 @@ body {
 .main {
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 project-side-menu {
   min-width: 250px;
+  z-index: 9;
+}
+
+project-side-menu[open=true] {
+  pointer-events: auto;
+}
+
+project-side-menu[open=false] {
+  pointer-events: none;
 }
 
 todo-content {
   width: calc(100% - 280px);
+}
+
+@media (max-width: 900px) {
+  project-side-menu {
+    position: absolute;
+  }
+
+  todo-content {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  project-side-menu {
+    min-width: 100%;
+  }
+}
+
+add-project-popup {
+  position: relative;
+  z-index: 19;
 }

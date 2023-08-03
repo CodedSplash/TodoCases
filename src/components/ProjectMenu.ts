@@ -21,6 +21,12 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
         transition: transform 0.3s ease 0s;
       }
       
+      @media (max-width: 480px) {
+        .project-side-menu {
+            max-width: calc(100% - 30px);
+        }
+      }
+      
       .project-side-menu.open {
         transform: translateX(0);
       }
@@ -119,6 +125,9 @@ ${style}
     const projectButton = this.shadow.querySelectorAll('.project-side-menu__item-btn')
     if (projectButton.length) {
       projectButton.forEach((button: Element) => button.addEventListener('click', this.openProject))
+    }
+    if (window.innerWidth < 900) {
+        this.setAttribute('open', 'false')
     }
   }
 

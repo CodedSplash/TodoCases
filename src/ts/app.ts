@@ -8,6 +8,8 @@ sideMenuButton.addEventListener('click', () => {
         projectSideMenu.setAttribute('open', 'false')
     } else if (valueAttribute === 'false') {
         projectSideMenu.setAttribute('open', 'true')
+    } else if (window.innerWidth < 900 && valueAttribute === null) {
+        projectSideMenu.setAttribute('open', 'true')
     } else if (valueAttribute === null) {
         projectSideMenu.setAttribute('open', 'false')
     }
