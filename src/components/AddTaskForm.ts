@@ -1,4 +1,4 @@
-import {AddTaskFormInterface, TodoContentInterface} from "../ts/interfaces"
+import {AddTaskFormInterface, ProjectInterface, TasksInterface, TodoContentInterface} from "../ts/interfaces"
 
 class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
     shadow: ShadowRoot
@@ -111,6 +111,42 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
         `
     }
 
+    public add(): void {
+        type priorityTask =  'Приоритет 1' | 'Приоритет 2' | 'Приоритет 3' | 'Приоритет 4'
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        const nameTask = this.shadow.querySelector('#name') as HTMLInputElement
+        const descriptionTask = this.shadow.querySelector('#description') as HTMLInputElement
+        const selectElement = this.shadow.querySelector('#priority') as HTMLSelectElement
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        let priorityTask: priorityTask
+        if (selectElement.value === 'Приоритет 1' ||
+            selectElement.value === 'Приоритет 2' ||
+            selectElement.value === 'Приоритет 3' ||
+            selectElement.value === 'Приоритет 4')
+        {
+            priorityTask = selectElement.value
+        } else {
+            priorityTask = 'Приоритет 4'
+        }
+        const newTask: TasksInterface = {
+            title: nameTask.value,
+            description: descriptionTask.value,
+            id: new Date().getTime(),
+            accomplished: false,
+            priority: priorityTask
+        }
+        const newProjects: ProjectInterface[] = projects.map((project: ProjectInterface) => {
+            if (project.id === idProject) {
+                project.tasks.push(newTask)
+            }
+            return project
+        })
+        localStorage.setItem('projects', JSON.stringify(newProjects))
+        nameTask.value = ''
+        descriptionTask.value = ''
+        selectElement.value = 'Приоритет 4'
+    }
+
     public cancel(): void {
         const todoContentElement = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
         todoContentElement.renderAddTaskButton()
@@ -119,7 +155,26 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
     public connectedCallback(): void {
         this.render()
         const cancelButton = this.shadow.querySelector('.add-task-form__cancel') as HTMLButtonElement
+        const addButton = this.shadow.querySelector('.add-task-form__add') as HTMLButtonElement
         cancelButton.addEventListener('click', this.cancel)
+        addButton.addEventListener('click', this.add.bind(this))
+        this.shadow.querySelector('#name')!.addEventListener('input', (event) => {
+            const addButton = this.shadow.querySelector('.add-task-form__add') as HTMLButtonElement
+            const inputElement = event.target as HTMLInputElement
+            addButton.disabled = !inputElement.value
+        })
+    }
+
+    public disconnectedCallback(): void {
+        const cancelButton = this.shadow.querySelector('.add-task-form__cancel') as HTMLButtonElement
+        const addButton = this.shadow.querySelector('.add-task-form__add') as HTMLButtonElement
+        cancelButton.addEventListener('click', this.cancel)
+        addButton.addEventListener('click', this.add.bind(this))
+        this.shadow.querySelector('#name')!.addEventListener('input', (event) => {
+            const addButton = this.shadow.querySelector('.add-task-form__add') as HTMLButtonElement
+            const inputElement = event.target as HTMLInputElement
+            addButton.disabled = !inputElement.value
+        })
     }
 }
 
