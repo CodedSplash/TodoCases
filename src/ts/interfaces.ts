@@ -52,3 +52,8 @@ export interface TodoContentInterface extends Element {
   renderAddTaskButton(): void
   renderTaskTemplate(): string
 }
+
+export interface AddTaskFormInterface extends Element {
+  add(): void
+  cancel(): void
+}
