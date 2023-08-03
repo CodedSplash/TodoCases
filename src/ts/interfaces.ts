@@ -57,3 +57,7 @@ export interface AddTaskFormInterface extends Element {
   add(): void
   cancel(): void
 }
+
+export interface TodoItemInterface extends Element {
+  openTaskView(): void
+}
