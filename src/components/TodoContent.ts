@@ -60,44 +60,6 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                     padding: 0;
                     margin: 0;
                 }
-                
-                .todo-content__body-add-button {
-                    display: flex;
-                    column-gap: 10px;
-                    border: none;
-                    background-color: transparent;
-                    cursor: pointer;
-                    padding: 10px;
-                }
-                
-                .todo-content__body-add-button span{
-                    display: flex;
-                    align-items: center;
-                }
-                
-                .todo-content__body-add-button:hover .plus svg {
-                    fill: #fff;
-                    z-index: 10;
-                }
-                
-                .todo-content__body-add-button:hover .plus {
-                    position: relative;
-                }
-                
-                .todo-content__body-add-button:hover .plus:before {
-                    content: '';
-                    top: calc(16px - 18px);
-                    left: calc(15px - 18px);
-                    position: absolute;
-                    width: 18px;
-                    height: 18px;
-                    background-color: #ff0000;
-                    border-radius: 50%;
-                }
-                
-                .todo-content__body-add-button:hover .text {
-                    color: #ff0000;
-                }
             </style>
         `
         this.shadow.innerHTML = `
@@ -112,12 +74,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                         <div class="todo-content__body">
                             <div class="todo-content__body-content"></div>
                             <div class="todo-content__body-button-container">
-                                <button class="todo-content__body-add-button">
-                                    <span class="plus">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><style>svg{fill:#000000}</style><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
-                                    </span>
-                                    <span class="text">Добавить задачу</span>
-                                </button>
+                                <add-task-button></add-task-button>
                             </div>
                         </div>
                     ` : ''}
@@ -155,14 +112,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
 
     public renderAddTaskButton(): void {
         const addButton = this.shadow.querySelector('.todo-content__body-button-container') as HTMLDivElement
-        addButton.innerHTML = `
-            <button class="todo-content__body-add-button">
-                <span class="plus">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><style>svg{fill:#000000}</style><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
-                </span>
-                <span class="text">Добавить задачу</span>
-            </button>
-        `
+        addButton.innerHTML = `<add-task-button></add-task-button>`
     }
 
     public connectedCallback(): void {
