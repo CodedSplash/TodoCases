@@ -15,6 +15,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         position: fixed;
         top: 0;
         left: 0;
+        z-index: 19;
         width: 100%;
         height: 100vh;
         display: flex;

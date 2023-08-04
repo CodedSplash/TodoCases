@@ -1,14 +1,14 @@
-body {
-  overflow: hidden;
-}
-
 .header {
+  position: sticky;
+  left: 0;
+  top: 0;
+  z-index: 14;
+  width: 100%;
   padding: 6px 0;
   background-color: #fafafa;
   -webkit-box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
   -moz-box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
   box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
-  z-index: 99;
 
   &__container {
     display: flex;
@@ -43,7 +43,7 @@ body {
 
 project-side-menu {
   min-width: 250px;
-  z-index: 9;
+  z-index: 15;
 }
 
 project-side-menu[open=true] {
