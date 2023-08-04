@@ -12,10 +12,13 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
     const style = `
       <style>
       .project-side-menu {
+        position: fixed;
+        left: 0;
+        top: 48px;
         max-width: 280px;
         width: 100%;
         padding: 20px 15px;
-        height: 100vh;
+        height: calc(100vh - 48px);
         background-color: #fafafa;
         transform: translateX(-100%);
         transition: transform 0.3s ease 0s;
@@ -117,6 +120,7 @@ ${style}
     const todoContentElement = document.querySelector('todo-content') as TodoContentInterface & HTMLElement
     todoContentElement.setAttribute('project-id', idProject)
     todoContentElement.render()
+    todoContentElement.taskRendering()
   }
 
   public connectedCallback(): void {
