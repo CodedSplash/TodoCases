@@ -22,7 +22,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                     max-width: 800px;
                     height: 100%;
                     margin: 0 auto;
-                    padding: 0 15px;
+                    padding: 0 15px 15px 15px;
                 }
                 
                 @media (max-width: 1200px) {
@@ -58,6 +58,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                     align-items: center;
                     justify-content: space-between;
                     padding: 20px 0;
+                    z-index: 10;
                 }
                 
                 .todo-content__title {
