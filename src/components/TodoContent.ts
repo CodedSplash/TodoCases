@@ -20,7 +20,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
             <style>
                 .todo-content__container {
                     max-width: 800px;
-                    height: 100vh;
+                    height: 100%;
                     margin: 0 auto;
                     padding: 0 15px;
                 }
@@ -50,6 +50,10 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                 }
                 
                 .todo-content__head {
+                    position: sticky;
+                    top: 48px;
+                    left: 0;
+                    background-color: #fff;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
@@ -86,21 +90,20 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
     public taskRendering(): void {
         const todoContainer = this.shadow.querySelector('.todo-content__body-content') as HTMLDivElement
         const idProject: number = parseInt(this.getAttribute('project-id') as string)
-        let projects: ProjectInterface[] | undefined
+        let projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
         let project: ProjectInterface | undefined
         let tasks: TasksInterface[] | undefined
-        if (idProject) {
-            projects = JSON.parse(localStorage.getItem('projects') as string)
-            project = projects!.find((project: ProjectInterface) => project.id === idProject)!
+        if (idProject > 0) {
+            project = projects.find((project: ProjectInterface) => project.id === idProject)!
             tasks = project.tasks
-            todoContainer.innerHTML = tasks!.map(() => this.renderTaskTemplate).join('')
+            todoContainer.innerHTML = tasks.map((task: TasksInterface) => this.renderTaskTemplate(task)).join('')
         }
     }
 
-    public renderTaskTemplate(): string {
+    public renderTaskTemplate(task: TasksInterface): string {
         const idProject: string = this.getAttribute('project-id')!
         return `
-            <todo-item project-id="${idProject}"></todo-item>
+            <todo-item project-id="${idProject}" task-id="${task.id}"></todo-item>
         `
     }
 
