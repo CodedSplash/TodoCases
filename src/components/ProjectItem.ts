@@ -1,4 +1,4 @@
-import {ProjectInterface, ProjectItemInterface} from "../ts/interfaces"
+import {ProjectInterface, ProjectItemInterface, TodoContentInterface} from "../ts/interfaces"
 
 class ProjectItem extends HTMLElement implements ProjectItemInterface {
     shadow: ShadowRoot
@@ -56,11 +56,21 @@ class ProjectItem extends HTMLElement implements ProjectItemInterface {
     }
 
     public openProject(event: Event): void {
-
+        const target = event.target as EventTarget & HTMLElement
+        const idProject: string = target.getAttribute('project-id')!
+        const todoContentElement = document.querySelector('todo-content') as TodoContentInterface & HTMLElement
+        todoContentElement.setAttribute('project-id', idProject)
+        todoContentElement.render()
+        todoContentElement.taskRendering()
     }
 
     public connectedCallback(): void {
         this.render()
+        this.shadow.querySelector('button.project-side-menu__item-btn')!.addEventListener('click', this.openProject)
+    }
+
+    public disconnectedCallback(): void {
+        this.shadow.querySelector('button.project-side-menu__item-btn')!.addEventListener('click', this.openProject)
     }
 }
 
