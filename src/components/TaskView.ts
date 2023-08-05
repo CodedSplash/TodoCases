@@ -115,8 +115,6 @@ class TaskView extends HTMLElement implements Popup {
             </style>
         `
 
-        console.log(task.description)
-
         this.shadow.innerHTML = `
             ${style}
             <div class="popup">
@@ -150,7 +148,7 @@ class TaskView extends HTMLElement implements Popup {
     }
 
     public disconnectedCallback(): void {
-        this.shadow.querySelector('.popup__button-close')!.addEventListener('click', this.closePopup)
+        this.shadow.querySelector('.popup__button-close')!.removeEventListener('click', this.closePopup)
     }
 }
 
