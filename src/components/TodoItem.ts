@@ -163,7 +163,9 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
     public openTaskView(): void {
         const popupView = document.createElement('task-view') as HTMLElement
         const idProject: string = this.getAttribute('project-id')!
+        const idTask: string = this.getAttribute('task-id')!
         popupView.setAttribute('project-id', idProject)
+        popupView.setAttribute('task-id', idTask)
         document.body.append(popupView)
     }
 
