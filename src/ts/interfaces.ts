@@ -6,7 +6,6 @@ export interface Element {
 export interface ProjectMenuInterface extends Element {
   projectRenderer(): void
   projectTemplate(project: ProjectInterface): string
-  openProject(event: Event): void
 }
 
 export interface TasksInterface {
@@ -50,6 +49,7 @@ export interface TodoContentInterface extends Element {
   taskRendering(): void
   renderAddTaskForm(): void
   renderAddTaskButton(): void
+  renderTaskTemplate(task: TasksInterface): string
 }
 
 export interface AddTaskFormInterface extends Element {
@@ -62,5 +62,5 @@ export interface TodoItemInterface extends Element {
 }
 
 export interface ProjectItemInterface extends Element {
-  renderTaskTemplate(task: TasksInterface): string
+  openProject(event: Event): void
 }
