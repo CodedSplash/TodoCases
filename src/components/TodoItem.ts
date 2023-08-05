@@ -31,6 +31,11 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                     margin: 0;
                 }
                 
+                .todo-item__content {
+                    width: 100%;
+                    cursor: pointer;
+                }
+                
                 .todo-item__title,
                 .todo-item__description {
                     overflow: hidden;
@@ -141,8 +146,20 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
         `
     }
 
+    public openTaskView(): void {
+        const popupView = document.createElement('task-view') as HTMLElement
+        const idProject: string = this.getAttribute('project-id')!
+        popupView.setAttribute('project-id', idProject)
+        document.body.append(popupView)
+    }
+
     public connectedCallback(): void {
         this.render()
+        this.shadow.querySelector('.todo-item__content')!.addEventListener('click', this.openTaskView.bind(this))
+    }
+
+    public disconnectedCallback(): void {
+        this.shadow.querySelector('.todo-item__content')!.addEventListener('click', this.openTaskView)
     }
 }
 
