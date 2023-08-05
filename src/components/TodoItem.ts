@@ -1,5 +1,3 @@
-import {ProjectInterface, TasksInterface, TodoItemInterface} from "../ts/interfaces"
-
 class TodoItem extends HTMLElement implements TodoItemInterface {
     shadow: ShadowRoot
     constructor() {
@@ -169,14 +167,34 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
         document.body.append(popupView)
     }
 
+    public setAccomplished(): void {
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        const idTask: number = parseInt(this.getAttribute('task-id') as string)
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const tasks: TasksInterface[] = project.tasks
+        const task: TasksInterface = tasks.find((task: TasksInterface) => task.id === idTask)!
+        const indexTask: number = tasks.indexOf(task)
+        const indexProject: number = projects.indexOf(project)
+        task.accomplished = !task.accomplished
+        tasks.splice(indexTask, 1, task)
+        project.tasks = tasks
+        projects.splice(indexProject, 1, project)
+        localStorage.setItem('projects', JSON.stringify(projects))
+    }
+
     public connectedCallback(): void {
         this.render()
         this.shadow.querySelector('.todo-item__content')!.addEventListener('click', this.openTaskView.bind(this))
+        this.shadow.querySelector('.todo-item__checkbox')!.addEventListener('click', this.setAccomplished.bind(this))
     }
 
     public disconnectedCallback(): void {
-        this.shadow.querySelector('.todo-item__content')!.addEventListener('click', this.openTaskView)
+        this.shadow.querySelector('.todo-item__content')!.removeEventListener('click', this.openTaskView)
+        this.shadow.querySelector('.todo-item__checkbox')!.removeEventListener('click', this.setAccomplished)
     }
 }
+
+import {ProjectInterface, TasksInterface, TodoItemInterface} from "../ts/interfaces"
 
 customElements.define('todo-item', TodoItem)

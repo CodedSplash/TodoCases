@@ -59,6 +59,7 @@ export interface AddTaskFormInterface extends Element {
 
 export interface TodoItemInterface extends Element {
   openTaskView(): void
+  setAccomplished(): void
 }
 
 export interface ProjectItemInterface extends Element {
