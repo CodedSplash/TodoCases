@@ -24,7 +24,7 @@ export interface ProjectInterface {
   tasks: TasksInterface[]
 }
 
-interface Popup extends Element {
+export interface Popup extends Element {
   closePopup(): void
 }
 
