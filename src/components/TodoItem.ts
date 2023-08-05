@@ -32,8 +32,18 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                 }
                 
                 .todo-item__content {
+                    display: flex;
+                    flex-direction: column;
                     width: 100%;
                     cursor: pointer;
+                }
+                
+                .todo-item__content:not(.todo-item__description) {
+                    justify-content: center;
+                }
+                
+                .todo-item__description {
+                    font-size: 14px;
                 }
                 
                 .todo-item__title,
@@ -69,6 +79,10 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                     .todo-item__description {
                         max-width: 260px;
                     }
+                }
+                
+                .todo-item__title {
+                    font-size: 16px;
                 }
                 
                 .todo-item__title:not(:last-child) {
