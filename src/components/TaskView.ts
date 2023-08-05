@@ -140,11 +140,17 @@ class TaskView extends HTMLElement implements Popup {
     }
 
     public closePopup(): void {
-
+        const taskViewElement = document.querySelector('task-view') as HTMLElement
+        taskViewElement.remove()
     }
 
     public connectedCallback(): void {
         this.render()
+        this.shadow.querySelector('.popup__button-close')!.addEventListener('click', this.closePopup)
+    }
+
+    public disconnectedCallback(): void {
+        this.shadow.querySelector('.popup__button-close')!.addEventListener('click', this.closePopup)
     }
 }
 
