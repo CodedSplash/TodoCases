@@ -50,7 +50,6 @@ export interface TodoContentInterface extends Element {
   taskRendering(): void
   renderAddTaskForm(): void
   renderAddTaskButton(): void
-  renderTaskTemplate(task: TasksInterface): string
 }
 
 export interface AddTaskFormInterface extends Element {
@@ -60,4 +59,8 @@ export interface AddTaskFormInterface extends Element {
 
 export interface TodoItemInterface extends Element {
   openTaskView(): void
+}
+
+export interface ProjectItemInterface extends Element {
+  renderTaskTemplate(task: TasksInterface): string
 }
