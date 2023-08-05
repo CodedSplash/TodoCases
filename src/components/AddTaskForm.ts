@@ -145,6 +145,8 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
         nameTask.value = ''
         descriptionTask.value = ''
         selectElement.value = 'Приоритет 4'
+        const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+        todoContent.taskRendering()
     }
 
     public cancel(): void {
