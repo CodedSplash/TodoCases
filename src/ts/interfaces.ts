@@ -78,5 +78,5 @@ export interface ModifyTaskInterface extends Popup {
 }
 
 export interface ChangingPriorityInterface extends Element {
-  changePriority(): void
+  changePriority(event: Event): void
 }

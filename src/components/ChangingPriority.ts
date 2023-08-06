@@ -1,4 +1,4 @@
-import {ChangingPriorityInterface, ProjectInterface, TasksInterface} from "../ts/interfaces"
+import {ChangingPriorityInterface, ProjectInterface, TasksInterface, TodoContentInterface} from "../ts/interfaces"
 
 class ChangingPriority extends HTMLElement implements ChangingPriorityInterface {
     shadow: ShadowRoot
@@ -21,6 +21,7 @@ class ChangingPriority extends HTMLElement implements ChangingPriorityInterface 
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    column-gap: 4px;
                 }
                 
                 button {
@@ -32,6 +33,10 @@ class ChangingPriority extends HTMLElement implements ChangingPriorityInterface 
                     cursor: pointer;
                     padding: 10px;
                     border-radius: 4px;
+                }
+                
+                svg {
+                    pointer-events: none;
                 }
                 
                 button.current {
@@ -68,12 +73,60 @@ class ChangingPriority extends HTMLElement implements ChangingPriorityInterface 
         `
     }
 
-    public changePriority(): void {
+    public changePriority(event: Event): void {
+        type priority = 'Приоритет 1' | 'Приоритет 2' | 'Приоритет 3' | 'Приоритет 4'
+        const target = event.target as HTMLButtonElement
+        const priorityIdValue: string = target.id
+        let priorityValue: priority = 'Приоритет 4'
 
+        if (priorityIdValue === 'priority1') {
+            priorityValue = 'Приоритет 1'
+        } else if (priorityIdValue === 'priority2') {
+            priorityValue = 'Приоритет 2'
+        } else if (priorityIdValue === 'priority3') {
+            priorityValue = 'Приоритет 3'
+        }
+
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        const idTask: number = parseInt(this.getAttribute('task-id') as string)
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const indexProject: number = projects.indexOf(project)
+        const tasks: TasksInterface[] = project.tasks
+        const task: TasksInterface = tasks.find((task: TasksInterface) => task.id === idTask)!
+        const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+        project.tasks = tasks.map((task: TasksInterface) => {
+            if (task.id === idTask) {
+                const modifyTask: TasksInterface = {
+                    id: task.id,
+                    title: task.title,
+                    description: task.title,
+                    accomplished: task.accomplished,
+                    priority: priorityValue!
+                }
+                return modifyTask
+            } else {
+                return task
+            }
+        })
+        projects.splice(indexProject, 1, project)
+        localStorage.setItem('projects', JSON.stringify(projects))
+        todoContent.taskRendering()
     }
 
     public connectedCallback(): void {
         this.render()
+        const changePriorityButtons = this.shadow.querySelectorAll('.priority-buttons__button') as NodeListOf<HTMLButtonElement>
+        changePriorityButtons.forEach((button: HTMLButtonElement) => {
+            button.addEventListener('click', this.changePriority.bind(this))
+        })
+    }
+
+    public disconnectedCallback(): void {
+        const changePriorityButtons = this.shadow.querySelectorAll('.priority-buttons__button') as NodeListOf<HTMLButtonElement>
+        changePriorityButtons.forEach((button) => {
+            button.addEventListener('click', this.changePriority.bind(this))
+        })
     }
 }
 
