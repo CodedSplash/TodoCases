@@ -67,6 +67,7 @@ export interface ProjectItemInterface extends Element {
 }
 
 export interface ActionsTaskInterface extends Element {
+  openContextMenu(): void
   modify(): void
   duplicate(): void
   delete(): void

@@ -82,10 +82,22 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
         `
     }
 
+    public openContextMenu(): void {
+        const contextMenu = this.shadow.querySelector('.context-menu') as HTMLDivElement
+        contextMenu.classList.toggle('open')
+    }
+
     
 
     public connectedCallback(): void {
         this.render()
+        const openButton = this.shadow.querySelector('.context-menu-button') as HTMLButtonElement
+        openButton.addEventListener('click', this.openContextMenu.bind(this))
+    }
+
+    public disconnectedCallback(): void {
+        const openButton = this.shadow.querySelector('.context-menu-button') as HTMLButtonElement
+        openButton.removeEventListener('click', this.openContextMenu.bind(this))
     }
 }
 
