@@ -72,3 +72,7 @@ export interface ActionsTaskInterface extends Element {
   duplicate(): void
   delete(): void
 }
+
+export interface ModifyTaskInterface extends Popup {
+  modifyTask(): void
+}
