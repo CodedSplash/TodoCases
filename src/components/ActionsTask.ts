@@ -117,7 +117,7 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
             accomplished: task.accomplished,
             priority: task.priority!
         }
-        tasks.splice(indexTask, 0, newTask)
+        tasks.splice(indexTask + 1, 0, newTask)
         project.tasks = tasks
         projects.splice(indexProject, 1, project)
         localStorage.setItem('projects', JSON.stringify(projects))
@@ -126,7 +126,20 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
     }
 
     public delete(): void {
-
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        const idTask: number = parseInt(this.getAttribute('task-id') as string)
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const indexProject: number = projects.indexOf(project)
+        const tasks: TasksInterface[] = project.tasks
+        const task: TasksInterface = tasks.find((task: TasksInterface) => task.id === idTask)!
+        const indexTask: number = tasks.indexOf(task)
+        const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+        tasks.splice(indexTask, 1)
+        projects.splice(indexProject, 1, project)
+        localStorage.setItem('projects', JSON.stringify(projects))
+        todoContent.taskRendering()
+        this.openContextMenu()
     }
 
     public connectedCallback(): void {
@@ -137,6 +150,8 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
         modifyButton.addEventListener('click', this.modify.bind(this))
         const duplicateButton = this.shadow.querySelector('#duplicate') as HTMLButtonElement
         duplicateButton.addEventListener('click', this.duplicate.bind(this))
+        const deleteButton = this.shadow.querySelector('#delete') as HTMLButtonElement
+        deleteButton.addEventListener('click', this.delete.bind(this))
     }
 
     public disconnectedCallback(): void {
@@ -146,6 +161,8 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
         modifyButton.removeEventListener('click', this.modify.bind(this))
         const duplicateButton = this.shadow.querySelector('#duplicate') as HTMLButtonElement
         duplicateButton.removeEventListener('click', this.duplicate.bind(this))
+        const deleteButton = this.shadow.querySelector('#delete') as HTMLButtonElement
+        deleteButton.addEventListener('click', this.delete.bind(this))
     }
 }
 
