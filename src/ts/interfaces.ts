@@ -76,3 +76,7 @@ export interface ActionsTaskInterface extends Element {
 export interface ModifyTaskInterface extends Popup {
   modifyTask(): void
 }
+
+export interface ChangingPriorityInterface extends Element {
+  changePriority(): void
+}
