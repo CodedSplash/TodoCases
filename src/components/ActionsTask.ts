@@ -1,4 +1,4 @@
-import {ActionsTaskInterface, ProjectInterface, TasksInterface} from "../ts/interfaces"
+import {ActionsTaskInterface, ProjectInterface, TasksInterface, TodoContentInterface} from "../ts/interfaces"
 
 class ActionsTask extends HTMLElement implements ActionsTaskInterface {
     shadow: ShadowRoot
@@ -101,7 +101,28 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
     }
 
     public duplicate(): void {
-
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        const idTask: number = parseInt(this.getAttribute('task-id') as string)
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const indexProject: number = projects.indexOf(project)
+        const tasks: TasksInterface[] = project.tasks
+        const task: TasksInterface = tasks.find((task: TasksInterface) => task.id === idTask)!
+        const indexTask: number = tasks.indexOf(task)
+        const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+        const newTask: TasksInterface = {
+            title: task.title,
+            id: new Date().getTime(),
+            description: task.description,
+            accomplished: task.accomplished,
+            priority: task.priority!
+        }
+        tasks.splice(indexTask, 0, newTask)
+        project.tasks = tasks
+        projects.splice(indexProject, 1, project)
+        localStorage.setItem('projects', JSON.stringify(projects))
+        todoContent.taskRendering()
+        this.openContextMenu()
     }
 
     public delete(): void {
@@ -114,13 +135,17 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
         openButton.addEventListener('click', this.openContextMenu.bind(this))
         const modifyButton = this.shadow.querySelector('#modify') as HTMLButtonElement
         modifyButton.addEventListener('click', this.modify.bind(this))
+        const duplicateButton = this.shadow.querySelector('#duplicate') as HTMLButtonElement
+        duplicateButton.addEventListener('click', this.duplicate.bind(this))
     }
 
     public disconnectedCallback(): void {
         const openButton = this.shadow.querySelector('.context-menu-button') as HTMLButtonElement
         openButton.removeEventListener('click', this.openContextMenu.bind(this))
         const modifyButton = this.shadow.querySelector('#modify') as HTMLButtonElement
-        modifyButton.addEventListener('click', this.modify.bind(this))
+        modifyButton.removeEventListener('click', this.modify.bind(this))
+        const duplicateButton = this.shadow.querySelector('#duplicate') as HTMLButtonElement
+        duplicateButton.removeEventListener('click', this.duplicate.bind(this))
     }
 }
 
