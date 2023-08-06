@@ -97,19 +97,30 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
         modifyTask.setAttribute('project-id', idProject)
         modifyTask.setAttribute('task-id', idTask)
         document.body.append(modifyTask)
+        this.openContextMenu()
     }
 
-    
+    public duplicate(): void {
+
+    }
+
+    public delete(): void {
+
+    }
 
     public connectedCallback(): void {
         this.render()
         const openButton = this.shadow.querySelector('.context-menu-button') as HTMLButtonElement
         openButton.addEventListener('click', this.openContextMenu.bind(this))
+        const modifyButton = this.shadow.querySelector('#modify') as HTMLButtonElement
+        modifyButton.addEventListener('click', this.modify.bind(this))
     }
 
     public disconnectedCallback(): void {
         const openButton = this.shadow.querySelector('.context-menu-button') as HTMLButtonElement
         openButton.removeEventListener('click', this.openContextMenu.bind(this))
+        const modifyButton = this.shadow.querySelector('#modify') as HTMLButtonElement
+        modifyButton.addEventListener('click', this.modify.bind(this))
     }
 }
 
