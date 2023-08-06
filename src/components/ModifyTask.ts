@@ -260,6 +260,11 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
         cancelButton.addEventListener('click', this.closePopup)
         const saveButton = this.shadow.querySelector('.popup__save-btn') as HTMLButtonElement
         saveButton.addEventListener('click', this.modifyTask.bind(this))
+        this.shadow.querySelector('#name')!.addEventListener('input', (event) => {
+            const addButton = this.shadow.querySelector('.popup__save-btn') as HTMLButtonElement
+            const inputElement = event.target as HTMLInputElement
+            addButton.disabled = !inputElement.value
+        })
     }
 
     public disconnectedCallback(): void {
@@ -267,6 +272,11 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
         cancelButton.addEventListener('click', this.closePopup)
         const saveButton = this.shadow.querySelector('.popup__save-btn') as HTMLButtonElement
         saveButton.addEventListener('click', this.modifyTask.bind(this))
+        this.shadow.querySelector('#name')!.removeEventListener('input', (event) => {
+            const addButton = this.shadow.querySelector('.popup__save-btn') as HTMLButtonElement
+            const inputElement = event.target as HTMLInputElement
+            addButton.disabled = !inputElement.value
+        })
     }
 }
 
