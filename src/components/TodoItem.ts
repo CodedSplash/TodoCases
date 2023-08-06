@@ -152,7 +152,7 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                         <p class="todo-item__title">${task.title.trim()}</p>
                         ${task.description.trim() === '' ?'' : `<p class="todo-item__description">${task.description.trim()}</p>`}
                     </div>
-                    <actions-task></actions-task>
+                    <actions-task project-id="${idProject}" task-id="${idTask}"></actions-task>
                 </div>
             </div>
         `
