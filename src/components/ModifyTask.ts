@@ -1,4 +1,10 @@
-import {ModifyTaskInterface} from "../ts/interfaces"
+import {
+    ModifyTaskInterface,
+    ProjectInterface,
+    ProjectMenuInterface,
+    TasksInterface,
+    TodoContentInterface
+} from "../ts/interfaces"
 
 class ModifyTask extends HTMLElement implements ModifyTaskInterface {
     shadow: ShadowRoot
@@ -216,18 +222,51 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
     }
 
     public modifyTask(): void {
-
+        type priority = 'Приоритет 1' | 'Приоритет 2' | 'Приоритет 3' | 'Приоритет 4'
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        const idTask: number = parseInt(this.getAttribute('task-id') as string)
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const tasks: TasksInterface[] = project.tasks
+        const indexProject: number = projects.indexOf(project)
+        const nameTask = this.shadow.querySelector('#name') as HTMLInputElement
+        const descriptionTask = this.shadow.querySelector('#description') as HTMLTextAreaElement
+        const priorityTaskElement = this.shadow.querySelector('#priority') as HTMLSelectElement
+        const priorityTaskValue = priorityTaskElement.value as priority
+        const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+        project.tasks = tasks.map((task: TasksInterface) => {
+            if (task.id === idTask) {
+                const modifyTask: TasksInterface = {
+                    id: task.id,
+                    title: nameTask.value,
+                    description: descriptionTask.value,
+                    accomplished: task.accomplished,
+                    priority: priorityTaskValue
+                }
+                return modifyTask
+            } else {
+                return task
+            }
+        })
+        projects.splice(indexProject, 1, project)
+        localStorage.setItem('projects', JSON.stringify(projects))
+        todoContent.taskRendering()
+        this.closePopup()
     }
 
     public connectedCallback(): void {
         this.render()
         const cancelButton = this.shadow.querySelector('.popup__cancel') as HTMLButtonElement
         cancelButton.addEventListener('click', this.closePopup)
+        const saveButton = this.shadow.querySelector('.popup__save-btn') as HTMLButtonElement
+        saveButton.addEventListener('click', this.modifyTask.bind(this))
     }
 
     public disconnectedCallback(): void {
         const cancelButton = this.shadow.querySelector('.popup__cancel') as HTMLButtonElement
         cancelButton.addEventListener('click', this.closePopup)
+        const saveButton = this.shadow.querySelector('.popup__save-btn') as HTMLButtonElement
+        saveButton.addEventListener('click', this.modifyTask.bind(this))
     }
 }
 
