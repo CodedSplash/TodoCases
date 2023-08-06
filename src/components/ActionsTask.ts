@@ -1,4 +1,4 @@
-import {ActionsTaskInterface} from "../ts/interfaces"
+import {ActionsTaskInterface, ProjectInterface, TasksInterface} from "../ts/interfaces"
 
 class ActionsTask extends HTMLElement implements ActionsTaskInterface {
     shadow: ShadowRoot
@@ -8,6 +8,9 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
     }
 
     public render(): void {
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        const idTask: number = parseInt(this.getAttribute('task-id') as string)
+
         const style = `
            <style>
                 .container {
@@ -73,7 +76,7 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
                 <div class="context-menu">
                     <div class="context-menu__body">
                         <button class="context-menu__item" id="modify">Изменить</button>
-                        <changing-priority></changing-priority>
+                        <changing-priority project-id="${idProject}" task-id="${idTask}"></changing-priority>
                         <button class="context-menu__item" id="duplicate">Дублировать</button>
                         <button class="context-menu__item" id="delete">Удалить</button>
                     </div>
@@ -85,6 +88,15 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
     public openContextMenu(): void {
         const contextMenu = this.shadow.querySelector('.context-menu') as HTMLDivElement
         contextMenu.classList.toggle('open')
+    }
+
+    public modify(): void {
+        const idProject: string = this.getAttribute('project-id')!
+        const idTask: string = this.getAttribute('task-id')!
+        const modifyTask = document.createElement('modify-task') as HTMLElement
+        modifyTask.setAttribute('project-id', idProject)
+        modifyTask.setAttribute('task-id', idTask)
+        document.body.append(modifyTask)
     }
 
     
