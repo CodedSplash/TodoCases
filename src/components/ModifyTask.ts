@@ -211,7 +211,8 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
     }
 
     public closePopup(): void {
-
+        const modifyElement = document.querySelector('modify-task') as HTMLElement
+        modifyElement.remove()
     }
 
     public modifyTask(): void {
@@ -220,6 +221,13 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
 
     public connectedCallback(): void {
         this.render()
+        const cancelButton = this.shadow.querySelector('.popup__cancel') as HTMLButtonElement
+        cancelButton.addEventListener('click', this.closePopup)
+    }
+
+    public disconnectedCallback(): void {
+        const cancelButton = this.shadow.querySelector('.popup__cancel') as HTMLButtonElement
+        cancelButton.addEventListener('click', this.closePopup)
     }
 }
 
