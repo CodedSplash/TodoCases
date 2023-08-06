@@ -65,3 +65,9 @@ export interface TodoItemInterface extends Element {
 export interface ProjectItemInterface extends Element {
   openProject(event: Event): void
 }
+
+export interface ActionsTaskInterface extends Element {
+  modify(): void
+  duplicate(): void
+  delete(): void
+}
