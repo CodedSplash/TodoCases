@@ -67,9 +67,6 @@ class ThemeItem extends HTMLElement implements ThemeItemInterface {
         `
     }
 
-    public closePopup(): void {
-    }
-
     public white(): void {
 
     }
