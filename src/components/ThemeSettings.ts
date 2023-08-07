@@ -35,8 +35,8 @@ class ThemeSettings extends HTMLElement implements Popup {
                     display: flex;
                     flex-direction: column;
                     row-gap: 14px;
-                    max-width: 500px;
-                    min-height: 500px;
+                    max-width: 700px;
+                    min-height: 450px;
                     max-height: 600px;
                     width: 100%;
                     overflow-y: auto;
@@ -44,14 +44,17 @@ class ThemeSettings extends HTMLElement implements Popup {
                     -webkit-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
                     -moz-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
                     box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
-                    padding: 15px 0;
+                    padding: 0 0 15px 0;
                   }
                   
                   .popup__head {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    padding: 0 20px;
+                    padding: 15px 20px;
+                    -webkit-box-shadow: 0 3px 5px -5px rgba(34, 60, 80, 0.6);
+                    -moz-box-shadow: 0 3px 5px -5px rgba(34, 60, 80, 0.6);
+                    box-shadow: 0 3px 5px -5px rgba(34, 60, 80, 0.6);
                   }
                   
                   .popup__title {
@@ -81,7 +84,7 @@ class ThemeSettings extends HTMLElement implements Popup {
                       justify-content: center;
                       outline: none;
                       border: none;
-                      padding: 6px;
+                      padding: 8px;
                       border-radius: 4px;
                       transition: .05s ease 0s;
                       z-index: 19;
@@ -94,6 +97,7 @@ class ThemeSettings extends HTMLElement implements Popup {
         `
 
         this.shadow.innerHTML = `
+            ${style}
             <div class="popup">
               <div class="popup__body">
                 <div class="popup__head">
