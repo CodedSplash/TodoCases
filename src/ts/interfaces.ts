@@ -81,7 +81,7 @@ export interface ChangingPriorityInterface extends Element {
   changePriority(event: Event): void
 }
 
-export interface ThemeSettingsInterface extends Popup {
+export interface ThemeItemInterface extends Popup {
     black(): void
     white(): void
     blue(): void
