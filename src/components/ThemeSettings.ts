@@ -35,10 +35,10 @@ class ThemeSettings extends HTMLElement implements Popup {
                     display: flex;
                     flex-direction: column;
                     row-gap: 14px;
-                    min-width: 500px;
-                    min-height: 80px;
+                    max-width: 500px;
+                    min-height: 500px;
                     max-height: 600px;
-                    max-width: 600px;
+                    width: 100%;
                     overflow-y: auto;
                     overflow-x: hidden;
                     -webkit-box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
@@ -113,8 +113,20 @@ class ThemeSettings extends HTMLElement implements Popup {
         `
     }
 
+    public closePopup(): void {
+        const themeSettingsElement = document.querySelector('theme-settings') as HTMLElement
+        themeSettingsElement.remove()
+    }
+
     public connectedCallback(): void {
         this.render()
+        const closeButton = this.shadow.querySelector('.popup__button-close') as HTMLButtonElement
+        closeButton.addEventListener('click', this.closePopup)
+    }
+
+    public disconnectedCallback(): void {
+        const closeButton = this.shadow.querySelector('.popup__button-close') as HTMLButtonElement
+        closeButton.removeEventListener('click', this.closePopup)
     }
 }
 
