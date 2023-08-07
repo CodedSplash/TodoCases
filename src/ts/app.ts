@@ -14,3 +14,12 @@ sideMenuButton.addEventListener('click', () => {
         projectSideMenu.setAttribute('open', 'false')
     }
 })
+
+// Opening Theme Settings
+
+const settingsThemeButton = document.querySelector('.header__button-settings') as HTMLButtonElement
+
+settingsThemeButton.addEventListener('click', () => {
+    const settingsThemeElement = document.createElement('theme-settings') as HTMLElement
+    document.body.append(settingsThemeElement)
+})
