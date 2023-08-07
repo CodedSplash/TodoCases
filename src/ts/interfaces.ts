@@ -87,3 +87,7 @@ export interface ThemeItemInterface extends Popup {
     blue(): void
     red(): void
 }
+
+export interface Settings {
+  theme: string
+}

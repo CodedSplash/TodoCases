@@ -1,4 +1,4 @@
-import {Popup} from "../ts/interfaces"
+import {Popup, Settings} from "../ts/interfaces"
 
 class ThemeSettings extends HTMLElement implements Popup {
     shadow: ShadowRoot
@@ -8,6 +8,9 @@ class ThemeSettings extends HTMLElement implements Popup {
     }
 
     public render(): void {
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const settingsTheme: string = settings?.theme || 'white'
+
         const style = `
             <style>
                 h2 {
@@ -64,9 +67,14 @@ class ThemeSettings extends HTMLElement implements Popup {
                   
                   .popup__content {
                     display: flex;
-                    column-gap: 15px;
+                    flex-wrap: wrap;
+                    gap: 15px;
                     padding: 0 20px;
                     overflow: hidden;
+                  }
+                  
+                  theme-item {
+                    flex: 0 0 calc(50% - 15px);
                   }
                   
                   @media (max-width: 520px) {
@@ -107,10 +115,10 @@ class ThemeSettings extends HTMLElement implements Popup {
                     </button>
                 </div>
                 <div class="popup__content">
-                    <theme-item theme-name="dark"></theme-item>
-                    <theme-item theme-name="white"></theme-item>
-                    <theme-item theme-name="blue"></theme-item>
-                    <theme-item theme-name="red"></theme-item>
+                    <theme-item theme-name="dark" checked="${(settingsTheme === 'dark')}"></theme-item>
+                    <theme-item theme-name="white" checked="${(settingsTheme === 'white')}"></theme-item>
+                    <theme-item theme-name="blue" checked="${(settingsTheme === 'blue')}"></theme-item>
+                    <theme-item theme-name="red" checked="${(settingsTheme === 'red')}"></theme-item>
                 </div>
               </div>
             </div>
