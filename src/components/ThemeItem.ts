@@ -1,4 +1,4 @@
-import {ThemeItemInterface} from "../ts/interfaces"
+import {Settings, ThemeItemInterface} from "../ts/interfaces"
 
 class ThemeItem extends HTMLElement implements ThemeItemInterface {
     shadow: ShadowRoot
@@ -68,23 +68,68 @@ class ThemeItem extends HTMLElement implements ThemeItemInterface {
     }
 
     public white(): void {
+        const bodyElement = document.body as HTMLElement
+        bodyElement.classList.value = 'white'
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        settings.theme = 'white'
+        localStorage.setItem('settings', JSON.stringify(settings))
+
 
     }
 
     public black(): void {
-
+        const bodyElement = document.body as HTMLElement
+        bodyElement.classList.value = 'black'
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        settings.theme = 'black'
+        localStorage.setItem('settings', JSON.stringify(settings))
     }
 
     public blue(): void {
-
+        const bodyElement = document.body as HTMLElement
+        bodyElement.classList.value = 'blue'
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        settings.theme = 'blue'
+        localStorage.setItem('settings', JSON.stringify(settings))
     }
 
     public red(): void {
-
+        const bodyElement = document.body as HTMLElement
+        bodyElement.classList.value = 'red'
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        settings.theme = 'red'
+        localStorage.setItem('settings', JSON.stringify(settings))
     }
 
     public connectedCallback(): void {
         this.render()
+        const theme: string = this.getAttribute('theme-name')!
+        this.addEventListener('click', () => {
+            if (theme === 'white') {
+                this.white()
+            } else if (theme === 'dark') {
+                this.black()
+            } else if (theme === 'blue') {
+                this.blue()
+            } else if (theme === 'red') {
+                this.red()
+            }
+        })
+    }
+
+    public disconnectedCallback(): void {
+        const theme: string = this.getAttribute('theme-name')!
+        this.removeEventListener('click', () => {
+            if (theme === 'white') {
+                this.white()
+            } else if (theme === 'black') {
+                this.black()
+            } else if (theme === 'blue') {
+                this.blue()
+            } else if (theme === 'red') {
+                this.red()
+            }
+        })
     }
 }
 
