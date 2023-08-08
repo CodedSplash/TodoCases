@@ -1,3 +1,51 @@
+.white {
+  background-color: #fff;
+
+  & .header {
+    background-color: #fafafa;
+  }
+
+  & .button svg {
+    fill: #000;
+  }
+}
+
+.black {
+  background-color: #282828;
+
+  & .header {
+    background-color: #282828;
+  }
+
+  & .button svg {
+    fill: #fff;
+  }
+}
+
+.blue {
+  background-color: #fff;
+
+  & .header {
+    background-color: #2967e2;
+  }
+
+  & .button svg {
+    fill: #fff;
+  }
+}
+
+.red {
+  background-color: #fff;
+
+  & .header {
+    background-color: #FF0046;
+  }
+
+  & .button svg {
+    fill: #fff;
+  }
+}
+
 .header {
   position: sticky;
   left: 0;
@@ -6,9 +54,7 @@
   width: 100%;
   padding: 6px 0;
   background-color: #fafafa;
-  -webkit-box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
-  -moz-box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
-  box-shadow: 0 3px 5px -6px rgba(34, 60, 80, 0.6);
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
 
   &__container {
     display: flex;
