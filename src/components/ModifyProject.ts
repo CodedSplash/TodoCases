@@ -1,4 +1,4 @@
-import {ModifyProjectPopup, ProjectInterface, ProjectMenuInterface} from "../ts/interfaces"
+import {ModifyProjectPopup, ProjectInterface, ProjectMenuInterface, Settings} from "../ts/interfaces"
 
 class ModifyProject extends HTMLElement implements ModifyProjectPopup {
     shadow: ShadowRoot
@@ -8,6 +8,9 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
     }
 
     public render(): void {
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
+
         const style = `
     <style>
       .popup {
@@ -24,7 +27,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         overflow: hidden;
       }
       .popup__body {
-        background-color: #fff;
+        background-color: ${theme === 'black' ? '#282828' : '#fff'};
         border-radius: 10px;
         display: flex;
         flex-direction: column;
@@ -54,21 +57,29 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
       
       .popup__input label {
         font-weight: 700;
+        color: ${theme === 'black' ? '#fff' : '#000'};
       }
       
       .popup__input input {
         font-size: 18px;
         border-radius: 4px;
-        outline: none;
       }
       
-      .popup__input input:focus {
+      .popup__input input[type=text]:focus {
         border: 2px solid rgba(0, 0, 0, 0.5);
         outline: none;
       }
       
+      .popup__input input[type=color] {
+        background-color: ${theme === 'black' ? '#282828' : '#fff'};
+        border: 1px solid ${theme === 'black' ? '#fff' : '#000'};
+      }
+      
       #name {
         padding: 5px;
+        color: ${theme === 'black' ? '#fff' : '#000'};
+        border: 1px solid ${theme === 'black' ? '#fff' : '#000'};
+        background-color: ${theme === 'black' ? '#282828' : '#fff'};
       }
       
       #color {
@@ -93,6 +104,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
       .popup__title {
         margin: 0;
         padding: 0 20px;
+        color: ${theme === 'black' ? '#fff' : '#000'};
       }
       
       .popup__cancel {
