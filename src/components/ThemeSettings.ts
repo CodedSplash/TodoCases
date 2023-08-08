@@ -78,10 +78,21 @@ class ThemeSettings extends HTMLElement implements Popup {
                     flex: 0 0 calc(50% - 15px);
                   }
                   
+                  @media (max-width: 740px) {
+                    .popup__body {
+                        min-width: 480px;
+                        max-width: 480px;
+                    }
+                  }
+                  
                   @media (max-width: 520px) {
                     .popup__body {
                         min-width: 290px;
                         max-width: 290px;
+                    }
+                    
+                    theme-item {
+                      flex: 0 0 100%;
                     }
                   }
                   

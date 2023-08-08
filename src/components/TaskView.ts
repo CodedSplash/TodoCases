@@ -51,7 +51,7 @@ class TaskView extends HTMLElement implements Popup {
                     row-gap: 14px;
                     min-width: 500px;
                     min-height: 80px;
-                    max-height: 600px;
+                    max-height: 450px;
                     max-width: 600px;
                     overflow-y: auto;
                     overflow-x: hidden;
