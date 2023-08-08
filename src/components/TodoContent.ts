@@ -1,4 +1,4 @@
-import {ProjectInterface, TasksInterface, TodoContentInterface} from "../ts/interfaces"
+import {ProjectInterface, Settings, TasksInterface, TodoContentInterface} from "../ts/interfaces"
 
 class TodoContent extends HTMLElement implements TodoContentInterface {
     shadow: ShadowRoot
@@ -8,6 +8,8 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
     }
 
     public render(): void {
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
         const idProject: number = parseInt(this.getAttribute('project-id') as string)
         let projects: ProjectInterface[] | undefined
         let project: ProjectInterface | undefined
@@ -53,7 +55,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                     position: sticky;
                     top: 48px;
                     left: 0;
-                    background-color: #fff;
+                    background-color: ${theme === 'black' ? '#202020' : '#fff'};
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
@@ -64,6 +66,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                 .todo-content__title {
                     padding: 0;
                     margin: 0;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                 }
             </style>
         `
