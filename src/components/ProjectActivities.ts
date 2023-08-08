@@ -1,4 +1,4 @@
-import {ProjectActivitiesInterface, ProjectInterface, ProjectMenuInterface} from "../ts/interfaces"
+import {ProjectActivitiesInterface, ProjectInterface, ProjectMenuInterface, Settings} from "../ts/interfaces"
 
 class ProjectActivities extends HTMLElement implements ProjectActivitiesInterface {
     shadow: ShadowRoot
@@ -8,6 +8,9 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
     }
 
     public render(): void {
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
+
         const style = `
             <style>
                 .container {
@@ -24,15 +27,19 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
                     align-items: center;
                 }
                 
+                .context-menu-button svg {
+                    fill: ${theme === 'black' ? '#fff' : '#000'};
+                }
+                
                 .context-menu-button:hover {
-                    background-color: rgba(255,255,255,0.4);
+                    background-color: ${theme === 'black' ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.4)'};
                 }
                 
                 .context-menu {
                     display: none;
                     position: absolute;
                     left: -100%;
-                    background-color: #fff;
+                    background-color: ${theme === 'black' ? '#282828' : '#fff'};
                     -webkit-box-shadow: 0 0 10px 0px rgba(34, 60, 80, 0.2);
                     -moz-box-shadow: 0 0 10px 0px rgba(34, 60, 80, 0.2);
                     box-shadow: 0 0 10px 0px rgba(34, 60, 80, 0.2);
@@ -55,10 +62,11 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
                     border-radius: 4px;
                     cursor: pointer;
                     font-weight: 700;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                 }
                 
                 .context-menu__item:hover {
-                    background-color: rgba(47,79,79,0.25);
+                    background-color: ${theme === 'black' ? 'rgba(255,255,255,0.2)' : 'rgba(47,79,79,0.25)'};
                 }
             </style>
         `
