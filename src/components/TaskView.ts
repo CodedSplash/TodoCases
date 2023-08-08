@@ -1,4 +1,4 @@
-import {Popup, ProjectInterface, TasksInterface} from "../ts/interfaces"
+import {Popup, ProjectInterface, Settings, TasksInterface} from "../ts/interfaces"
 
 class TaskView extends HTMLElement implements Popup {
     shadow: ShadowRoot
@@ -14,6 +14,8 @@ class TaskView extends HTMLElement implements Popup {
         let project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
         let tasks: TasksInterface[] = project.tasks
         const task: TasksInterface = tasks.find((task: TasksInterface) => task.id === idTask)!
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
 
         const style = `
             <style>
@@ -42,7 +44,7 @@ class TaskView extends HTMLElement implements Popup {
                     z-index: 19;
                   }
                   .popup__body {
-                    background-color: #fff;
+                    background-color: ${theme === 'black' ? '#202020' : '#fff'};
                     border-radius: 10px;
                     display: flex;
                     flex-direction: column;
@@ -69,14 +71,17 @@ class TaskView extends HTMLElement implements Popup {
                   .popup__title {
                     display: flex;
                     align-items: center;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                   }
                   
                   .popup__description {
                     word-wrap: break-word;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                   }
                   
                   .popup__name {
                     word-wrap: break-word;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                   }
                   
                   .popup__content {
@@ -109,8 +114,12 @@ class TaskView extends HTMLElement implements Popup {
                       z-index: 19;
                   }
                   
+                  .popup__button-close svg {
+                    fill: ${theme === 'black' ? '#fff' : '#000'};
+                  }
+                  
                   .popup__button-close:hover {
-                    background-color: rgba(0, 0, 0, 0.15);
+                    background-color: ${theme === 'black' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'};
                   }
             </style>
         `
