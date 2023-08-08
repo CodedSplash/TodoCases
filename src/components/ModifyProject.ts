@@ -8,6 +8,9 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
     }
 
     public render(): void {
+        const idProject: number = parseInt(this.getAttribute('id-project') as string)
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
         const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
         const theme: string = settings.theme
 
@@ -159,17 +162,17 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         <div class="popup__content">
           <div class="popup__input">
               <label for="name">Имя</label>
-              <input type="text" name="name" id="name" />
+              <input type="text" name="name" id="name" value="${project.title}" />
           </div>
           <div class="popup__input">
             <label for="color">Цвет</label>
-            <input type="color" value="#808080" name="color" id="color" />
+            <input type="color" value="${project.color}" name="color" id="color" />
           </div>
         </div>
         <hr>
         <div class="popup__buttons">
             <button class="popup__cancel">Отмена</button>
-            <button class="popup__save-btn" disabled>Сохранить</button>
+            <button class="popup__save-btn">Сохранить</button>
         </div>
       </div>
     </div>

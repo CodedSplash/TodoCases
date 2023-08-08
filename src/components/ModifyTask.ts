@@ -14,6 +14,12 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
     }
 
     public render(): void {
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
+        const idTask: number = parseInt(this.getAttribute('task-id') as string)
+        const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
+        const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const tasks: TasksInterface[] = project.tasks
+        const task: TasksInterface = tasks.find((task: TasksInterface) => task.id === idTask)!
         const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
         const theme: string = settings.theme
 
@@ -203,26 +209,26 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
                 <div class="popup__content">
                   <div class="popup__input">
                       <label for="name">Название задачи</label>
-                      <input type="text" name="name" id="name" />
+                      <input type="text" name="name" id="name" value="${task.title}" />
                   </div>
                   <div class="popup__textarea">
                       <label for="description">Описание задачи</label>
-                      <textarea name="description" id="description" rows="6"></textarea>
+                      <textarea name="description" id="description" rows="6">${task.description === '' ? '' : task.description}</textarea>
                   </div>
                   <div class="popup__priority">
                       <label for="priority">Приоритет задачи</label>
                       <select name="priority" id="priority">
-                        <option value="Приоритет 1">Приоритет 1</option>
-                        <option value="Приоритет 2">Приоритет 2</option>
-                        <option value="Приоритет 3">Приоритет 3</option>
-                        <option value="Приоритет 4" selected>Приоритет 4</option>
+                        <option value="Приоритет 1" ${task.priority === 'Приоритет 1' ? 'selected' : ''}>Приоритет 1</option>
+                        <option value="Приоритет 2" ${task.priority === 'Приоритет 2' ? 'selected' : ''}>Приоритет 2</option>
+                        <option value="Приоритет 3" ${task.priority === 'Приоритет 3' ? 'selected' : ''}>Приоритет 3</option>
+                        <option value="Приоритет 4" ${task.priority === 'Приоритет 4' ? 'selected' : ''}>Приоритет 4</option>
                       </select>
                   </div>
                 </div>
                 <hr>
                 <div class="popup__buttons">
                     <button class="popup__cancel">Отмена</button>
-                    <button class="popup__save-btn" disabled>Сохранить</button>
+                    <button class="popup__save-btn">Сохранить</button>
                 </div>
               </div>
             </div>
