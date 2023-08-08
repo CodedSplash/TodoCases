@@ -1,4 +1,4 @@
-import {ActionsTaskInterface, ProjectInterface, TasksInterface, TodoContentInterface} from "../ts/interfaces"
+import {ActionsTaskInterface, ProjectInterface, Settings, TasksInterface, TodoContentInterface} from "../ts/interfaces"
 
 class ActionsTask extends HTMLElement implements ActionsTaskInterface {
     shadow: ShadowRoot
@@ -10,6 +10,8 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
     public render(): void {
         const idProject: number = parseInt(this.getAttribute('project-id') as string)
         const idTask: number = parseInt(this.getAttribute('task-id') as string)
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
 
         const style = `
            <style>
@@ -28,18 +30,22 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
                     border-radius: 6px;
                 }
                 
+                .context-menu-button svg {
+                    fill: ${theme === 'black' ? '#fff' : '#000'};
+                }
+                
                 .context-menu-button:hover {
-                    background-color: rgba(0,0,0,0.15);
+                    background-color: ${theme === 'black' ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)'};
                 }
                 
                 .context-menu {
                     display: none;
                     position: absolute;
                     left: -100%;
-                    background-color: #fff;
-                    -webkit-box-shadow: 0 0 10px 0px rgba(34, 60, 80, 0.2);
-                    -moz-box-shadow: 0 0 10px 0px rgba(34, 60, 80, 0.2);
-                    box-shadow: 0 0 10px 0px rgba(34, 60, 80, 0.2);
+                    background-color: ${theme === 'black' ? '#202020' : '#fff'};
+                    -webkit-box-shadow: 0 0 10px 0 rgba(34, 60, 80, 0.2);
+                    -moz-box-shadow: 0 0 10px 0 rgba(34, 60, 80, 0.2);
+                    box-shadow: 0 0 10px 0 rgba(34, 60, 80, 0.2);
                     padding: 6px 8px;
                     border-radius: 5px;
                     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -59,10 +65,11 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
                     border-radius: 4px;
                     cursor: pointer;
                     font-weight: 700;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                 }
                 
                 .context-menu__item:hover {
-                    background-color: rgba(47,79,79,0.25);
+                    background-color: ${theme === 'black' ? 'rgba(255,255,255,0.2)' : 'rgba(47,79,79,0.25)'};
                 }
             </style>
         `
