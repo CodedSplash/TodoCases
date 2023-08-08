@@ -1,4 +1,4 @@
-import {Popup, Settings} from "../ts/interfaces"
+import {Popup, ProjectMenuInterface, TodoContentInterface} from "../ts/interfaces"
 
 class ThemeSettings extends HTMLElement implements Popup {
     shadow: ShadowRoot
@@ -8,9 +8,6 @@ class ThemeSettings extends HTMLElement implements Popup {
     }
 
     public render(): void {
-        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
-        const settingsTheme: string = settings?.theme || 'white'
-
         const style = `
             <style>
                 h2 {
@@ -115,10 +112,10 @@ class ThemeSettings extends HTMLElement implements Popup {
                     </button>
                 </div>
                 <div class="popup__content">
-                    <theme-item theme-name="dark" checked="${(settingsTheme === 'dark')}"></theme-item>
-                    <theme-item theme-name="white" checked="${(settingsTheme === 'white')}"></theme-item>
-                    <theme-item theme-name="blue" checked="${(settingsTheme === 'blue')}"></theme-item>
-                    <theme-item theme-name="red" checked="${(settingsTheme === 'red')}"></theme-item>
+                    <theme-item theme-name="black"></theme-item>
+                    <theme-item theme-name="white"></theme-item>
+                    <theme-item theme-name="blue"></theme-item>
+                    <theme-item theme-name="red"></theme-item>
                 </div>
               </div>
             </div>
@@ -134,11 +131,41 @@ class ThemeSettings extends HTMLElement implements Popup {
         this.render()
         const closeButton = this.shadow.querySelector('.popup__button-close') as HTMLButtonElement
         closeButton.addEventListener('click', this.closePopup)
+        const themeItem = this.shadow.querySelectorAll('theme-item') as NodeListOf<HTMLElement>
+        themeItem.forEach((element) => {
+            element.addEventListener('click', () => {
+                const themeSettings = document.querySelector('theme-settings') as HTMLElement & Popup
+                const newThemeSettings = document.createElement('theme-settings') as HTMLElement
+                const sideMenu = document.querySelector('project-side-menu') as HTMLElement & ProjectMenuInterface
+                const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+                sideMenu.render()
+                sideMenu.projectRenderer()
+                todoContent.render()
+                todoContent.taskRendering()
+                themeSettings.remove()
+                document.body.append(newThemeSettings)
+            })
+        })
     }
 
     public disconnectedCallback(): void {
         const closeButton = this.shadow.querySelector('.popup__button-close') as HTMLButtonElement
         closeButton.removeEventListener('click', this.closePopup)
+        const themeItem = this.shadow.querySelectorAll('theme-item') as NodeListOf<HTMLElement>
+        themeItem.forEach((element) => {
+            element.addEventListener('click', () => {
+                const themeSettings = document.querySelector('theme-settings') as HTMLElement & Popup
+                const newThemeSettings = document.createElement('theme-settings') as HTMLElement
+                const sideMenu = document.querySelector('project-side-menu') as HTMLElement & ProjectMenuInterface
+                const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+                sideMenu.render()
+                sideMenu.projectRenderer()
+                todoContent.render()
+                todoContent.taskRendering()
+                themeSettings.remove()
+                document.body.append(newThemeSettings)
+            })
+        })
     }
 }
 

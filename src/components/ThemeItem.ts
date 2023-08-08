@@ -11,10 +11,11 @@ class ThemeItem extends HTMLElement implements ThemeItemInterface {
         let color: string | undefined
         let textButton: string | undefined
         const theme: string = this.getAttribute('theme-name')!
-        const checked: string = this.getAttribute('checked')!
-        const isChecked: boolean = checked !== 'false'
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const settingsTheme: string = settings?.theme || 'white'
+        let isChecked: boolean = settingsTheme === theme
 
-        if (theme === 'dark') {
+        if (theme === 'black') {
             color = '#444444'
             textButton = 'Чёрная тема'
         } else if (theme === 'blue') {
@@ -53,6 +54,7 @@ class ThemeItem extends HTMLElement implements ThemeItemInterface {
                 }
                 
                 button input[type=radio] {
+                    pointer-events: none;
                     margin: 0;
                 }
             </style>
@@ -73,8 +75,6 @@ class ThemeItem extends HTMLElement implements ThemeItemInterface {
         const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
         settings.theme = 'white'
         localStorage.setItem('settings', JSON.stringify(settings))
-
-
     }
 
     public black(): void {
@@ -107,7 +107,7 @@ class ThemeItem extends HTMLElement implements ThemeItemInterface {
         this.addEventListener('click', () => {
             if (theme === 'white') {
                 this.white()
-            } else if (theme === 'dark') {
+            } else if (theme === 'black') {
                 this.black()
             } else if (theme === 'blue') {
                 this.blue()
