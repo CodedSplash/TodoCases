@@ -1,4 +1,4 @@
-import {Element, TodoContentInterface} from "../ts/interfaces"
+import {Element, Settings, TodoContentInterface} from "../ts/interfaces"
 
 class AddTaskButton extends HTMLElement implements Element {
     shadow: ShadowRoot
@@ -8,6 +8,9 @@ class AddTaskButton extends HTMLElement implements Element {
     }
 
     public render(): void {
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
+
         const style = `
             <style>
                 .add-task-button {
@@ -22,6 +25,12 @@ class AddTaskButton extends HTMLElement implements Element {
                 .add-task-button span{
                     display: flex;
                     align-items: center;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
+                }
+                
+                .plus svg {
+                    fill: ${theme === 'black' ? '#fff' : '#000'};
+                    z-index: 10;
                 }
                 
                 .add-task-button:hover .plus svg {
