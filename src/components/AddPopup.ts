@@ -122,7 +122,7 @@ class AddPopup extends HTMLElement implements AddProjectPopup {
       }
       
       .popup__add-btn {
-        background-color: #ff004d;
+        background-color: ${theme === 'blue' ? '#2967e2' : '#ff004d'};
         border-radius: 4px;
         border: none;
         padding: 10px;
@@ -134,7 +134,7 @@ class AddPopup extends HTMLElement implements AddProjectPopup {
         box-shadow: 0 0 4px 0 rgba(34, 60, 80, 0.2);
       }
       .popup__add-btn:disabled {
-        background-color: rgba(255,0,77,0.7);
+        background-color: ${theme === 'blue' ? 'rgba(41,103,226,0.7)' : 'rgba(255,0,77,0.7)'};
         cursor: default;
       }
       
