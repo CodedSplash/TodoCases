@@ -1,4 +1,4 @@
-import {AddTaskFormInterface, ProjectInterface, TasksInterface, TodoContentInterface} from "../ts/interfaces"
+import {AddTaskFormInterface, ProjectInterface, Settings, TasksInterface, TodoContentInterface} from "../ts/interfaces"
 
 class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
     shadow: ShadowRoot
@@ -8,6 +8,9 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
     }
 
     public render(): void {
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
+
         const style = `
             <style>
                 .add-task-form {
@@ -28,6 +31,8 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
                 
                 .add-task-form__content input {
                     border: none;
+                    background-color: ${theme === 'black' ? '#202020' : '#fff'};
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                 }
                 
                 .add-task-form__content input:focus {
