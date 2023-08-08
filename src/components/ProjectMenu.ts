@@ -1,4 +1,4 @@
-import {ProjectInterface, ProjectMenuInterface} from '../ts/interfaces'
+import {ProjectInterface, ProjectMenuInterface, Settings} from '../ts/interfaces'
 
 export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
   shadow: ShadowRoot
@@ -9,6 +9,9 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
   }
 
   public render(): void {
+    const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+    const theme: string = settings.theme
+
     const style = `
       <style>
       .project-side-menu {
@@ -19,7 +22,7 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
         width: 100%;
         padding: 20px 15px;
         height: calc(100vh - 48px);
-        background-color: #fafafa;
+        background-color: ${theme === 'black' ? '#282828' : '#fafafa'};
         transform: translateX(-100%);
         transition: transform 0.3s ease 0s;
       }
@@ -35,6 +38,7 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
       }
       
       .project-side-menu__title {
+        color: ${theme === 'black' ? 'hsla(0,0%,100%,0.56)' : '#000'};
         font-weight: 700;
         cursor: default;
       }
@@ -48,7 +52,7 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
        }
        
        .project-side-menu__add:hover {
-            background-color: rgba(47,79,79,0.25);
+            background-color: ${theme === 'black' ? 'rgba(255,255,255,0.2)' : 'rgba(47,79,79,0.25)'};
        }
       </style>
     `
