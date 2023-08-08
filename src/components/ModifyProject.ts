@@ -121,7 +121,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
       }
       
       .popup__save-btn {
-        background-color: #ff004d;
+        background-color: ${theme === 'blue' ? '#2967e2' : '#ff004d'};
         border-radius: 4px;
         border: none;
         padding: 10px;
@@ -133,7 +133,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         box-shadow: 0 0 4px 0 rgba(34, 60, 80, 0.2);
       }
       .popup__save-btn:disabled {
-        background-color: rgba(255,0,77,0.7);
+        background-color: ${theme === 'blue' ? 'rgba(41,103,226,0.7)' : 'rgba(255,0,77,0.7)'};
         cursor: default;
       }
       
