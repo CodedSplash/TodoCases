@@ -1,7 +1,7 @@
 import {
     ModifyTaskInterface,
     ProjectInterface,
-    ProjectMenuInterface,
+    ProjectMenuInterface, Settings,
     TasksInterface,
     TodoContentInterface
 } from "../ts/interfaces"
@@ -14,6 +14,9 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
     }
 
     public render(): void {
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
+
         const style = `
             <style>
                 .popup {
@@ -30,7 +33,7 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
                     overflow: hidden;
                   }
                   .popup__body {
-                    background-color: #fff;
+                    background-color: ${theme === 'black' ? '#202020' : '#fff'};
                     border-radius: 10px;
                     display: flex;
                     flex-direction: column;
@@ -61,6 +64,7 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
                   
                   .popup__input label {
                     font-weight: 700;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                   }
                   
                   .popup__input input {
@@ -76,6 +80,9 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
                   
                   #name {
                     padding: 5px;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
+                    border: 1px solid ${theme === 'black' ? '#fff' : '#000'};
+                    background-color: ${theme === 'black' ? '#202020' : '#fff'};
                   }
                   
                   #description {
@@ -93,6 +100,9 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
                     border-radius: 4px;
                     outline: none;
                     resize: none;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
+                    border: 1px solid ${theme === 'black' ? '#fff' : '#000'};
+                    background-color: ${theme === 'black' ? '#202020' : '#fff'};
                   }
                   
                   .popup__input textarea:focus {
@@ -102,6 +112,7 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
                   
                   .popup__textarea label {
                     font-weight: 700;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                   }
                   
                   .popup__priority {
@@ -116,6 +127,7 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
                   
                   .popup__priority label {
                     font-weight: 700;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                   }
                   
                   .popup__buttons {
@@ -136,6 +148,7 @@ class ModifyTask extends HTMLElement implements ModifyTaskInterface {
                   .popup__title {
                     margin: 0;
                     padding: 0 20px;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                   }
                   
                   .popup__cancel {
