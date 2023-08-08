@@ -19,8 +19,8 @@ class ThemeItem extends HTMLElement implements ThemeItemInterface {
             color = '#444444'
             textButton = 'Чёрная тема'
         } else if (theme === 'blue') {
-            color = '#003AFF'
-            textButton = 'Синяя тема'
+            color = '#2967e2'
+            textButton = 'Голубая тема'
         } else if (theme === 'red') {
             color = '#FF0046'
             textButton = 'Красная тема'
