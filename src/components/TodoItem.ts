@@ -13,6 +13,8 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
         const tasks: TasksInterface[] = project.tasks
         const task: TasksInterface = tasks.find((task: TasksInterface) => task.id === idTask)!
         let checkboxColor: string  = '#a9a9a9'
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
 
         if (task.priority === 'Приоритет 1') {
             checkboxColor = '#e32636'
@@ -49,6 +51,7 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                     overflow: hidden;
                     max-width: 740px;
                     text-overflow: ellipsis;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                 }
                 
                 @media (max-width: 1200px) {
@@ -115,6 +118,7 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                     border-radius: 4px;
                     border: 2px solid ${checkboxColor};
                     z-index: 8;
+                    background-color: ${theme === 'black' ? '#202020' : '#fff'};
                 }
                 
                 .todo-item__checkbox:checked:after {
@@ -195,6 +199,6 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
     }
 }
 
-import {ProjectInterface, TasksInterface, TodoItemInterface} from "../ts/interfaces"
+import {ProjectInterface, Settings, TasksInterface, TodoItemInterface} from "../ts/interfaces"
 
 customElements.define('todo-item', TodoItem)
