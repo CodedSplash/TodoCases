@@ -1,4 +1,4 @@
-import {ProjectInterface, ProjectItemInterface, TodoContentInterface} from "../ts/interfaces"
+import {ProjectInterface, ProjectItemInterface, Settings, TodoContentInterface} from "../ts/interfaces"
 
 class ProjectItem extends HTMLElement implements ProjectItemInterface {
     shadow: ShadowRoot
@@ -11,6 +11,8 @@ class ProjectItem extends HTMLElement implements ProjectItemInterface {
         const idProject: number = parseInt(this.getAttribute('project-id') as string)
         const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
         const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
 
         const style = `
             <style>
@@ -30,6 +32,11 @@ class ProjectItem extends HTMLElement implements ProjectItemInterface {
                     border: none;
                     cursor: pointer;
                     font-weight: 700;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
+               }
+               
+               .project-side-menu__item button span {
+                    pointer-events: none;
                }
                 
                .project-side-menu__item:hover {
