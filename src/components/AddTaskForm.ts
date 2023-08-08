@@ -70,7 +70,7 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
                 }
                 
                 .add-task-form__add {
-                    background-color: #ff004d;
+                    background-color: ${theme === 'blue' ? '#2967e2' : '#ff004d'};
                     border-radius: 4px;
                     border: none;
                     padding: 10px;
@@ -83,7 +83,7 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
                 }
                 
                 .add-task-form__add:disabled {
-                    background-color: rgba(255,0,77,0.7);
+                    background-color: ${theme === 'blue' ? 'rgba(41,103,226,0.7)' : 'rgba(255,0,77,0.7)'};
                     cursor: default;
                   }
                 
@@ -109,7 +109,7 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
                     <hr>
                     <div class="add-task-form__buttons">
                         <button class="add-task-form__cancel">Отмена</button>
-                        <button class="add-task-form__add">Добавить задачу</button>
+                        <button class="add-task-form__add" disabled>Добавить задачу</button>
                     </div>
                 </div>
             </div>
