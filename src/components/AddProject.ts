@@ -1,4 +1,4 @@
-import { Element } from "../ts/interfaces";
+import {Element, Settings} from "../ts/interfaces";
 
 class AddProject extends HTMLElement implements Element {
   shadow: ShadowRoot
@@ -9,6 +9,9 @@ class AddProject extends HTMLElement implements Element {
   }
 
   public render(): void {
+    const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+    const theme: string = settings.theme
+
     const style = `
       <style>
         button {
@@ -22,8 +25,12 @@ class AddProject extends HTMLElement implements Element {
             border-radius: 6px;
         }
         
+        button svg {
+            fill: ${theme === 'black' ? '#fff' : '#000'};
+        }
+        
         button:hover {
-            background-color: rgba(255,255,255,0.4);
+            background-color: ${theme === 'black' ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.4)'};
         }
       </style>
     `
