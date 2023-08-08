@@ -1,4 +1,4 @@
-import {Popup, ProjectMenuInterface, TodoContentInterface} from "../ts/interfaces"
+import {Popup, ProjectMenuInterface, Settings, TodoContentInterface} from "../ts/interfaces"
 
 class ThemeSettings extends HTMLElement implements Popup {
     shadow: ShadowRoot
@@ -8,6 +8,9 @@ class ThemeSettings extends HTMLElement implements Popup {
     }
 
     public render(): void {
+        const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
+        const theme: string = settings.theme
+
         const style = `
             <style>
                 h2 {
@@ -30,7 +33,7 @@ class ThemeSettings extends HTMLElement implements Popup {
                     z-index: 19;
                   }
                   .popup__body {
-                    background-color: #fff;
+                    background-color: ${theme === 'black' ? '#282828' : '#fff'};
                     border-radius: 10px;
                     display: flex;
                     flex-direction: column;
@@ -60,6 +63,7 @@ class ThemeSettings extends HTMLElement implements Popup {
                   .popup__title {
                     display: flex;
                     align-items: center;
+                    color: ${theme === 'black' ? '#fff' : '#000'};
                   }
                   
                   .popup__content {
@@ -95,8 +99,12 @@ class ThemeSettings extends HTMLElement implements Popup {
                       z-index: 19;
                   }
                   
+                  .popup__button-close svg {
+                    fill: ${theme === 'black' ? '#fff' : '#000'};
+                  }
+                  
                   .popup__button-close:hover {
-                    background-color: rgba(0, 0, 0, 0.15);
+                    background-color: ${theme === 'black' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'};
                   }
             </style>
         `

@@ -41,7 +41,7 @@ class ThemeItem extends HTMLElement implements ThemeItemInterface {
                     border-radius: 10px;
                     padding: 20px;
                     font-weight: 700;
-                    border: 1px solid #DEDEDE;
+                    border: ${settingsTheme === 'black' ? 'none' : '1px solid #DEDEDE'};
                     cursor: pointer;
                     color: ${color === '#fff' ? '#000' : '#fff'};
                     -webkit-box-shadow: 2px 2px 15px -8px rgba(34, 60, 80, 0.2);
