@@ -1,5 +1,7 @@
 // Opening the side menu
 
+import {Settings} from "./interfaces";
+
 const sideMenuButton = document.querySelector('.header__button-menu') as HTMLButtonElement
 sideMenuButton.addEventListener('click', () => {
     const projectSideMenu = document.querySelector('project-side-menu') as HTMLElement
@@ -23,3 +25,13 @@ settingsThemeButton.addEventListener('click', () => {
     const settingsThemeElement = document.createElement('theme-settings') as HTMLElement
     document.body.append(settingsThemeElement)
 })
+
+// Theme
+
+const settings: Settings = JSON.parse(localStorage.getItem('settings') as string) || {}
+const settingsTheme: string = settings?.theme || 'white'
+settings.theme = settingsTheme
+
+document.body.classList.value = settingsTheme
+
+localStorage.setItem('settings', JSON.stringify(settings))
