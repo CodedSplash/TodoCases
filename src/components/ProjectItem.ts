@@ -57,7 +57,7 @@ class ProjectItem extends HTMLElement implements ProjectItemInterface {
                 <span style="background-color: ${project.color}; border-radius: 50%; width: 10px; height: 10px; display: block;"></span>
                 <span style="padding: 0 0 0 10px; display: block;">${project.title}</span>
               </button>
-              <project-activities id-project="${project.id}"></project-activities>
+              <project-activities project-id="${project.id}"></project-activities>
             </div>
         `
     }

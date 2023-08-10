@@ -185,7 +185,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
 
     public saveModify(): void {
         const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
-        const idProject: number = parseInt(this.getAttribute('id-project') as string)
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
         const projectMenu = document.querySelector('project-side-menu') as ProjectMenuInterface & HTMLElement
         const nameProject = this.shadow.querySelector('#name') as HTMLInputElement
         const colorProject = this.shadow.querySelector('#color') as HTMLInputElement

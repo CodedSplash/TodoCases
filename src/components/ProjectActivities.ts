@@ -121,8 +121,8 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
 
     public modify(): void {
         const modifyProjectElement = document.createElement('modify-project')
-        const idProject: string = this.getAttribute('id-project')!
-        modifyProjectElement.setAttribute('id-project', idProject)
+        const idProject: string = this.getAttribute('project-id')!
+        modifyProjectElement.setAttribute('project-id', idProject)
         document.body.append(modifyProjectElement)
         this.openCloseMenu()
     }
@@ -130,7 +130,7 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
     public duplicate(): void {
         const projectMenu = document.querySelector('project-side-menu') as ProjectMenuInterface & HTMLElement
         const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
-        const idProject: number = parseInt(this.getAttribute('id-project') as string)
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
         const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
         const indexProject: number = projects.indexOf(project)
         const duplicateProject: ProjectInterface = {
@@ -148,7 +148,7 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
     public delete(): void {
         const projectMenu = document.querySelector('project-side-menu') as ProjectMenuInterface & HTMLElement
         const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
-        const idProject: number = parseInt(this.getAttribute('id-project') as string)
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
         const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
         const indexProject: number = projects.indexOf(project)
         projects.splice(indexProject, 1)
