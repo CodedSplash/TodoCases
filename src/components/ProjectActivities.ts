@@ -110,7 +110,6 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
             sideMenuBody.offsetHeight, sideMenuBody.offsetHeight,
             sideMenuBody.clientHeight, sideMenuBody.clientHeight
         );
-        console.log('newHeight', newHeight)
         if (newHeight > oldHeight) {
             contextMenu.style.top = '-113px'
             contextMenu.style.bottom = ''

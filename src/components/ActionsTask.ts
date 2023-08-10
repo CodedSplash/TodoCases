@@ -112,7 +112,6 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
             document.body.offsetHeight, document.documentElement.offsetHeight,
             document.body.clientHeight, document.documentElement.clientHeight
         );
-        console.log('newHeight', newHeight)
         if (newHeight > oldHeight) {
             contextMenu.style.top = '-150.33px'
             contextMenu.style.bottom = ''
