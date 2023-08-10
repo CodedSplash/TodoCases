@@ -52,6 +52,13 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
                     z-index: 10;
                 }
                 
+                @media (max-width: 1320px)
+                {
+                    .context-menu {
+                        left: -415%;
+                    }
+                }
+                
                 .context-menu.open {
                     display: block;
                 }
@@ -94,7 +101,25 @@ class ActionsTask extends HTMLElement implements ActionsTaskInterface {
 
     public openContextMenu(): void {
         const contextMenu = this.shadow.querySelector('.context-menu') as HTMLDivElement
+        const oldHeight: number = Math.max(
+            document.body.scrollHeight, document.documentElement.scrollHeight,
+            document.body.offsetHeight, document.documentElement.offsetHeight,
+            document.body.clientHeight, document.documentElement.clientHeight
+        );
         contextMenu.classList.toggle('open')
+        const newHeight: number = Math.max(
+            document.body.scrollHeight, document.documentElement.scrollHeight,
+            document.body.offsetHeight, document.documentElement.offsetHeight,
+            document.body.clientHeight, document.documentElement.clientHeight
+        );
+        console.log('newHeight', newHeight)
+        if (newHeight > oldHeight) {
+            contextMenu.style.top = '-150.33px'
+            contextMenu.style.bottom = ''
+        } else {
+            contextMenu.style.top = ''
+            contextMenu.style.bottom = '-150.33px'
+        }
     }
 
     public modify(): void {

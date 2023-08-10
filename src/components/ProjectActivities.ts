@@ -49,6 +49,13 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
                     z-index: 10;
                 }
                 
+                @media (max-width: 480px)
+                {
+                    .context-menu {
+                        left: -245%;
+                    }
+                }
+                
                 .context-menu.open {
                     display: block;
                 }
@@ -90,7 +97,27 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
 
     public openCloseMenu(): void {
         const contextMenu = this.shadow.querySelector('.context-menu') as HTMLDivElement
+        const sideMenu = document.querySelector('project-side-menu') as HTMLElement & ProjectMenuInterface
+        const sideMenuBody = sideMenu.shadow.querySelector('.project-side-menu__body') as HTMLDivElement
+        const oldHeight: number = Math.max(
+            sideMenuBody.scrollHeight, sideMenuBody.scrollHeight,
+            sideMenuBody.offsetHeight, sideMenuBody.offsetHeight,
+            sideMenuBody.clientHeight, sideMenuBody.clientHeight
+        );
         contextMenu.classList.toggle('open')
+        const newHeight: number = Math.max(
+            sideMenuBody.scrollHeight, sideMenuBody.scrollHeight,
+            sideMenuBody.offsetHeight, sideMenuBody.offsetHeight,
+            sideMenuBody.clientHeight, sideMenuBody.clientHeight
+        );
+        console.log('newHeight', newHeight)
+        if (newHeight > oldHeight) {
+            contextMenu.style.top = '-113px'
+            contextMenu.style.bottom = ''
+        } else {
+            contextMenu.style.top = ''
+            contextMenu.style.bottom = '-113px'
+        }
     }
 
     public modify(): void {

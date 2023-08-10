@@ -54,6 +54,10 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
        .project-side-menu__add:hover {
             background-color: ${theme === 'black' ? 'rgba(255,255,255,0.2)' : 'rgba(47,79,79,0.25)'};
        }
+       
+       .project-side-menu__body {
+        height: 100%;
+       }
       </style>
     `
     this.shadow.innerHTML = `
