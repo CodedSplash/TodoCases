@@ -1,4 +1,10 @@
-import {ProjectActivitiesInterface, ProjectInterface, ProjectMenuInterface, Settings} from "../ts/interfaces"
+import {
+    ProjectActivitiesInterface,
+    ProjectInterface,
+    ProjectMenuInterface,
+    Settings,
+    TodoContentInterface
+} from "../ts/interfaces"
 
 class ProjectActivities extends HTMLElement implements ProjectActivitiesInterface {
     shadow: ShadowRoot
@@ -151,8 +157,15 @@ class ProjectActivities extends HTMLElement implements ProjectActivitiesInterfac
         const idProject: number = parseInt(this.getAttribute('project-id') as string)
         const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
         const indexProject: number = projects.indexOf(project)
+        const todoContent = document.querySelector('todo-content') as TodoContentInterface & HTMLElement
+        const todoContentId: number = parseInt(todoContent.getAttribute('project-id') as string)
         projects.splice(indexProject, 1)
         localStorage.setItem('projects', JSON.stringify(projects))
+        if (project.id === todoContentId) {
+            todoContent.setAttribute('project-id', '0')
+            todoContent.render()
+            todoContent.taskRendering()
+        }
         projectMenu.projectRenderer()
         this.openCloseMenu()
     }
