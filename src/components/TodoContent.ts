@@ -77,7 +77,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
                     ${idProject ? `
                         <div class="todo-content__head">
                         <h2 class="todo-content__title">${project!.title}</h2>
-                        <project-activities></project-activities>
+                        <project-activities project-id="${idProject}"></project-activities>
                         </div>
                         <div class="todo-content__body">
                             <div class="todo-content__body-content"></div>
