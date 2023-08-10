@@ -1,4 +1,10 @@
-import {ModifyProjectPopup, ProjectInterface, ProjectMenuInterface, Settings} from "../ts/interfaces"
+import {
+    ModifyProjectPopup,
+    ProjectInterface,
+    ProjectMenuInterface,
+    Settings,
+    TodoContentInterface
+} from "../ts/interfaces"
 
 class ModifyProject extends HTMLElement implements ModifyProjectPopup {
     shadow: ShadowRoot
@@ -8,7 +14,7 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
     }
 
     public render(): void {
-        const idProject: number = parseInt(this.getAttribute('id-project') as string)
+        const idProject: number = parseInt(this.getAttribute('project-id') as string)
         const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
         const project: ProjectInterface = projects.find((project: ProjectInterface) => project.id === idProject)!
         const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
@@ -189,6 +195,8 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
         const projectMenu = document.querySelector('project-side-menu') as ProjectMenuInterface & HTMLElement
         const nameProject = this.shadow.querySelector('#name') as HTMLInputElement
         const colorProject = this.shadow.querySelector('#color') as HTMLInputElement
+        const todoContent = document.querySelector('todo-content') as TodoContentInterface & HTMLElement
+        const todoContentId: number = parseInt(todoContent.getAttribute('project-id') as string)
         const newProjects = projects.map((project: ProjectInterface, index: number) => {
             if (project.id === idProject) {
                 const modifyProject: ProjectInterface = {
@@ -203,6 +211,10 @@ class ModifyProject extends HTMLElement implements ModifyProjectPopup {
             }
         })
         localStorage.setItem('projects', JSON.stringify(newProjects))
+        if (idProject === todoContentId) {
+            todoContent.render()
+            todoContent.taskRendering()
+        }
         projectMenu.projectRenderer()
         this.closePopup()
     }
