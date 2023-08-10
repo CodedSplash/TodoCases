@@ -9,7 +9,7 @@ class TodoContent extends HTMLElement implements TodoContentInterface {
 
     public render(): void {
         const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
-        const theme: string = settings.theme
+        const theme: string = settings?.theme || 'white'
         const idProject: number = parseInt(this.getAttribute('project-id') as string)
         let projects: ProjectInterface[] | undefined
         let project: ProjectInterface | undefined

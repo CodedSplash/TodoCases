@@ -10,7 +10,7 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
 
   public render(): void {
     const settings: Settings = JSON.parse(localStorage.getItem('settings') as string)
-    const theme: string = settings.theme
+    const theme: string = settings?.theme || 'white'
 
     const style = `
       <style>
