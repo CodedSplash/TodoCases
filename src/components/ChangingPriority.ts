@@ -100,7 +100,7 @@ class ChangingPriority extends HTMLElement implements ChangingPriorityInterface 
                 const modifyTask: TasksInterface = {
                     id: task.id,
                     title: task.title,
-                    description: task.title,
+                    description: task.description,
                     accomplished: task.accomplished,
                     priority: priorityValue!
                 }
