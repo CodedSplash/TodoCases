@@ -56,7 +56,11 @@ export class ProjectMenu extends HTMLElement implements ProjectMenuInterface {
        }
        
        .project-side-menu__body {
-        height: 100%;
+            height: 100%;
+       }
+       
+       .project-side-menu__container {
+            color: ${theme === 'black' ? '#fff' : '#000'};
        }
       </style>
     `
