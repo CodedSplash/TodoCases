@@ -40,8 +40,8 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                     cursor: pointer;
                 }
                 
-                .todo-item__content:not(.todo-item__description) {
-                    justify-content: center;
+                .todo-item__content:not(.todo-item__description) .todo-item__title {
+                    font-size: 18px;
                 }
                 
                 .todo-item__description {
@@ -151,7 +151,7 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                     </div>
                     <div class="todo-item__content">
                         <p class="todo-item__title">${task.title.trim()}</p>
-                        ${task.description.trim() === '' ?'' : `<p class="todo-item__description">${task.description.trim()}</p>`}
+                        ${task.description.trim() === '' ? '' : `<p class="todo-item__description">${task.description.trim()}</p>`}
                     </div>
                     <actions-task project-id="${idProject}" task-id="${idTask}"></actions-task>
                 </div>
