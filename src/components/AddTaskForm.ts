@@ -90,6 +90,10 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
                 hr {
                     border: 1px solid #c0c0c0;
                 }
+                
+                .name-task-error::placeholder {
+                    color: #FF0000FF;
+                }
             </style>
         `
         this.shadow.innerHTML = `
@@ -122,36 +126,46 @@ class AddTaskForm extends HTMLElement implements AddTaskFormInterface {
         const nameTask = this.shadow.querySelector('#name') as HTMLInputElement
         const descriptionTask = this.shadow.querySelector('#description') as HTMLInputElement
         const selectElement = this.shadow.querySelector('#priority') as HTMLSelectElement
+        const addButton = this.shadow.querySelector('.add-task-form__add') as HTMLButtonElement
         const projects: ProjectInterface[] = JSON.parse(localStorage.getItem('projects') as string)
-        let priorityTask: priorityTask
-        if (selectElement.value === 'Приоритет 1' ||
-            selectElement.value === 'Приоритет 2' ||
-            selectElement.value === 'Приоритет 3' ||
-            selectElement.value === 'Приоритет 4')
-        {
-            priorityTask = selectElement.value
-        } else {
-            priorityTask = 'Приоритет 4'
-        }
-        const newTask: TasksInterface = {
-            title: nameTask.value,
-            description: descriptionTask.value,
-            id: new Date().getTime(),
-            accomplished: false,
-            priority: priorityTask
-        }
-        const newProjects: ProjectInterface[] = projects.map((project: ProjectInterface) => {
-            if (project.id === idProject) {
-                project.tasks.push(newTask)
+        if (nameTask.value.length) {
+            let priorityTask: priorityTask
+            if (selectElement.value === 'Приоритет 1' ||
+                selectElement.value === 'Приоритет 2' ||
+                selectElement.value === 'Приоритет 3' ||
+                selectElement.value === 'Приоритет 4')
+            {
+                priorityTask = selectElement.value
+            } else {
+                priorityTask = 'Приоритет 4'
             }
-            return project
-        })
-        localStorage.setItem('projects', JSON.stringify(newProjects))
-        nameTask.value = ''
-        descriptionTask.value = ''
-        selectElement.value = 'Приоритет 4'
-        const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
-        todoContent.taskRendering()
+            const newTask: TasksInterface = {
+                title: nameTask.value,
+                description: descriptionTask.value,
+                id: new Date().getTime(),
+                accomplished: false,
+                priority: priorityTask
+            }
+            const newProjects: ProjectInterface[] = projects.map((project: ProjectInterface) => {
+                if (project.id === idProject) {
+                    project.tasks.push(newTask)
+                }
+                return project
+            })
+            localStorage.setItem('projects', JSON.stringify(newProjects))
+            nameTask.value = ''
+            descriptionTask.value = ''
+            selectElement.value = 'Приоритет 4'
+            if (nameTask.classList.contains('name-task-error')) {
+                nameTask.classList.remove('name-task-error')
+            }
+            addButton.disabled = true
+            const todoContent = document.querySelector('todo-content') as HTMLElement & TodoContentInterface
+            todoContent.taskRendering()
+        } else {
+            nameTask.classList.add('name-task-error')
+            nameTask.focus()
+        }
     }
 
     public cancel(): void {
