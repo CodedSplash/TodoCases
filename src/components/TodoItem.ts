@@ -1,3 +1,5 @@
+import {ProjectInterface, Settings, TasksInterface, TodoItemInterface} from "../ts/interfaces"
+
 class TodoItem extends HTMLElement implements TodoItemInterface {
     shadow: ShadowRoot
     constructor() {
@@ -100,47 +102,42 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
                 .todo-item__checkbox-conatiner {
                     margin-right: 6px;
                 }
-            
+                
                 .todo-item__checkbox {
                     position: relative;
-                    cursor: pointer;
                     width: 18px;
                     height: 18px;
-                }
-                
-                .todo-item__checkbox:before {
-                    content: '';
-                    position: absolute;
-                    top: -1px;
-                    left: -1px;
-                    width: 16px;
-                    height: 16px;
                     border-radius: 4px;
                     border: 2px solid ${checkboxColor};
-                    z-index: 8;
+                    cursor: pointer;
                     background-color: ${theme === 'black' ? '#202020' : '#fff'};
                 }
                 
-                .todo-item__checkbox:checked:after {
+                .todo-item__checkbox.checked:before {
                     display: flex;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
                     align-items: center;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
                     justify-content: center;
-                    font-size: 13px;
-                    content: '🗸︎';
-                    color: #fff;
-                    font-weight: 700;
+                    font-size: 16px;
                     position: absolute;
                     top: 0;
                     left: 0;
+                    content: '✓︎';
+                    color: #fff;
+                    font-weight: 700;
                     width: 18px;
                     height: 18px;
                     border-radius: 2px;
                     background-color: ${checkboxColor};
                     z-index: 8;
+                    pointer-events: none;
                 }
                 
-                .todo-item__container:has(input[type="checkbox"]:checked) .todo-item__content .todo-item__title,
-                .todo-item__container:has(input[type="checkbox"]:checked) .todo-item__content .todo-item__description {
+                .todo-item__container:has(.todo-item__checkbox.checked) .todo-item__content .todo-item__title,
+                .todo-item__container:has(.todo-item__checkbox.checked) .todo-item__content .todo-item__description {
                   text-decoration: line-through;
                 }
             </style>
@@ -150,7 +147,7 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
             <div class="todo-item">
                 <div class="todo-item__container">
                     <div class="todo-item__checkbox-conatiner">
-                        <input type="checkbox" class="todo-item__checkbox" ${task.accomplished ? 'checked' : ''}>
+                        <div class="todo-item__checkbox ${task.accomplished ? 'checked' : ''}"></div>
                     </div>
                     <div class="todo-item__content">
                         <p class="todo-item__title">${task.title.trim()}</p>
@@ -191,14 +188,16 @@ class TodoItem extends HTMLElement implements TodoItemInterface {
         this.render()
         this.shadow.querySelector('.todo-item__content')!.addEventListener('click', this.openTaskView.bind(this))
         this.shadow.querySelector('.todo-item__checkbox')!.addEventListener('click', this.setAccomplished.bind(this))
+        const checkbox = this.shadow.querySelector('.todo-item__checkbox') as HTMLInputElement
+        checkbox.addEventListener('click', () => checkbox.classList.toggle('checked'))
     }
 
     public disconnectedCallback(): void {
         this.shadow.querySelector('.todo-item__content')!.removeEventListener('click', this.openTaskView)
         this.shadow.querySelector('.todo-item__checkbox')!.removeEventListener('click', this.setAccomplished)
+        const checkbox = this.shadow.querySelector('.todo-item__checkbox') as HTMLInputElement
+        checkbox.addEventListener('click', () => checkbox.classList.toggle('checked'))
     }
 }
-
-import {ProjectInterface, Settings, TasksInterface, TodoItemInterface} from "../ts/interfaces"
 
 customElements.define('todo-item', TodoItem)
